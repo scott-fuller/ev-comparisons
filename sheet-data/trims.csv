@@ -1,0 +1,31 @@
+modelId,make,model,year,warrantyBasic,warrantyBattery,trimName,msrp,drivetrain,range,mpge,batteryKwh,dcfcKw,zeroToSixty,cargo,comfort,priceFlag
+niro,Kia,Niro EV,2026,5/60,10/100 (inferred from Kia’s general EV policy — not model-specific),Wind,39700,FWD,253,113,64.8,85,7.1,63.7,Heated front seats standard | 10-way power driver seat,FALSE
+niro,Kia,Niro EV,2026,5/60,10/100 (inferred from Kia’s general EV policy — not model-specific),Wave,44700,FWD,253,113,64.8,85,7.1,63.7,Adds ventilated front seats | Driver memory seat | Heated outboard rear seats,FALSE
+bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,XLE,34900,FWD,236,130,57.7,150,8.0,27.7,Heated front seats standard | Heated steering wheel standard,FALSE
+bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,XLE Plus,37900,FWD,314,131,74.7,150,6.5,27.7,Heated front seats standard | Heated steering wheel standard,FALSE
+bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,Limited,43300,AWD,,117,74.7,150,4.6,27.7,Ventilated SofTex front seats | Heated rear seats | Panoramic moonroof,FALSE
+solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Premium,38495,AWD,288,120,74.7,150,,23.8,Heated front seats standard,FALSE
+solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Limited,41395,AWD,288,120,74.7,150,,23.8,Adds heated rear outboard seats,FALSE
+solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Limited XT,42895,AWD,278,117,74.7,150,4.9,23.8,Uprated 338hp motor | Heated front & rear seats,FALSE
+ioniq5,Hyundai,Ioniq 5,2026,5/60,8/100 · 10/100 powertrain,SE Standard Range,35000,RWD,245,,63,350,,26.3,Heated front seats standard | Cloth seating,FALSE
+ioniq5,Hyundai,Ioniq 5,2026,5/60,8/100 · 10/100 powertrain,SE,37500,RWD,318,,84,350,,26.3,Heated front seats standard | Cloth seating,FALSE
+ev6,Kia,EV6,2026,5/60,10/100 (Kia standard EV coverage),Light,37900,RWD,,115,,,,24.4,Heated front seats standard,FALSE
+ev6,Kia,EV6,2026,5/60,10/100 (Kia standard EV coverage),Light Long Range,41200,RWD,,115,,,,24.4,Heated front seats standard,FALSE
+ex30,Volvo,EX30,2026,4/50 (covers powertrain),8/100,"Plus, Single Motor",38950,RWD,261,116,64,153,5.1,27.8,Heated seats/wheel optional ($500 pkg) — not standard,FALSE
+machE,Ford,Mustang Mach-E,2026,3/36,8/100 (70% capacity floor) · 5/60 powertrain,Select RWD,37795,RWD,240,,73,150,,59.1,No heated seats standard (optional Comfort Pkg),FALSE
+machE,Ford,Mustang Mach-E,2026,3/36,8/100 (70% capacity floor) · 5/60 powertrain,Select AWD,40795,AWD,,,73,150,,59.1,No heated seats standard (optional Comfort Pkg),FALSE
+machE,Ford,Mustang Mach-E,2026,3/36,8/100 (70% capacity floor) · 5/60 powertrain,Premium RWD,40595,RWD,320,,88,150,,59.1,Heated & ventilated front seats standard | Heated steering wheel,FALSE
+machE,Ford,Mustang Mach-E,2026,3/36,8/100 (70% capacity floor) · 5/60 powertrain,Premium AWD,43595,AWD,,,88,150,,59.1,Heated & ventilated front seats standard | Heated steering wheel,FALSE
+modely,Tesla,Model Y,2026,4/50,8/100–120 (mileage may vary by pack; not confirmed for Standard),Standard RWD,39990,RWD,321,138,,250,6.8,76,Heated front seats standard | Ventilated/heated rear seats not confirmed for this trim,FALSE
+modely,Tesla,Model Y,2026,4/50,8/100–120 (mileage may vary by pack; not confirmed for Standard),Standard AWD,41990,AWD,,,,250,,76,Heated front seats standard | Ventilated/heated rear seats not confirmed for this trim,FALSE
+uncharted,Subaru,Uncharted,2026,3/36,8/100 · 5/60 powertrain,Premium,34995,FWD,308,129,74.7,150,,25.4,Heated front seats standard (All-Weather Package),FALSE
+uncharted,Subaru,Uncharted,2026,3/36,8/100 · 5/60 powertrain,Sport,39795,AWD,285,,74.7,150,4.7,25.4,Heated front seats standard (All-Weather Package),FALSE
+uncharted,Subaru,Uncharted,2026,3/36,8/100 · 5/60 powertrain,GT,43795,AWD,273,112,74.7,150,4.7,25.4,Adds ventilated front seats | Heated rear outboard seats,FALSE
+leaf,Nissan,Leaf,2026,3/36,8/100 · 5/60 powertrain,S+,29990,FWD,303,121,75,150,7.1,23.6,"Cloth seats, 6-way manual — no heating standard",FALSE
+leaf,Nissan,Leaf,2026,3/36,8/100 · 5/60 powertrain,SV+,34230,FWD,288,114,75,150,7.1,23.6,Heated front seats standard | 8-way power driver seat | First trim with rear climate vents,FALSE
+leaf,Nissan,Leaf,2026,3/36,8/100 · 5/60 powertrain,Platinum+,38990,FWD,259,103,75,150,7.1,23.6,Heated front & rear seats standard | Heated steering wheel,FALSE
+vf8,VinFast,VF8,2026,10/125,10yr / unlimited miles (to ~70% capacity floor),Eco,39900,AWD,256,73,87.7,110,5.9,13.2,Heated front seats standard | Head-up display standard,FALSE
+vf8,VinFast,VF8,2026,10/125,10yr / unlimited miles (to ~70% capacity floor),Plus,44900,AWD,235,,87.7,150,5.8,13.2,Heated front seats standard | Head-up display standard,FALSE
+equinox,Chevrolet,Equinox EV,2026,3/36,8/100,LT1,34995,FWD,319,108,85,150,7.7,26.4,Heated front seats/steering wheel available via Comfort Package — not standard,FALSE
+equinox,Chevrolet,Equinox EV,2026,3/36,8/100,LT2,41795,FWD,319,108,85,150,7.7,26.4,Heated front seats standard | Heated steering wheel standard | Power driver’s seat with lumbar,FALSE
+equinox,Chevrolet,Equinox EV,2026,3/36,8/100,RS,44095,FWD,319,108,85,150,,26.4,Heated front seats & steering wheel standard | Ventilated front seats & dual-zone climate via Convenience Package II,TRUE

@@ -42,11 +42,16 @@ body{
   font-family:var(--body);font-size:15.5px;line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
+.accent-bar{height:4px;background:linear-gradient(90deg,var(--s1),var(--s3) 55%,var(--s2));}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 a{color:var(--s1)}
 
 /* ---------- masthead ---------- */
-.masthead{padding:32px 0 20px;border-bottom:1px solid var(--rule)}
+.masthead{
+  padding:32px 0 20px;border-bottom:1px solid var(--rule);position:relative;overflow:hidden;
+  background:radial-gradient(680px 220px at 12% -20%,rgba(42,120,214,.08),transparent 70%),
+             radial-gradient(520px 200px at 92% 0%,rgba(27,175,122,.06),transparent 70%);
+}
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 20px}
 .masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,48px);line-height:1.06;letter-spacing:-.025em;margin:0 0 16px;max-width:22ch}
 .deck{font-size:17px;line-height:1.55;color:var(--ink-soft);max-width:70ch;margin:0 0 30px}
@@ -58,6 +63,7 @@ a{color:var(--s1)}
 
 section{padding:52px 0;border-bottom:1px solid var(--rule)}
 #table{padding-top:28px}
+#charts{background:linear-gradient(180deg,#F6F7FB,#F9F9F7 220px)}
 .sec-head{display:flex;gap:18px;align-items:baseline;margin-bottom:10px;flex-wrap:wrap}
 .sec-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:var(--ink);padding:4px 9px;border-radius:2px;flex-shrink:0}
 h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);letter-spacing:-.02em;line-height:1.1;margin:0}
@@ -65,8 +71,8 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);let
 
 /* ---------- callouts ---------- */
 .callouts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.callout{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--s1);border-radius:3px;padding:18px 20px}
-.callout.warn{border-left-color:var(--warn)}
+.callout{background:linear-gradient(135deg,var(--card),var(--seq-100) 220%);border:1px solid var(--rule);border-left:3px solid var(--s1);border-radius:3px;padding:18px 20px}
+.callout.warn{border-left-color:var(--warn);background:linear-gradient(135deg,var(--card),#FDECC8 240%)}
 .callout h3{font-family:var(--display);font-weight:700;font-size:14.5px;margin:0 0 8px;letter-spacing:-.01em}
 .callout p{margin:0;color:var(--ink-soft);font-size:14px;line-height:1.55}
 .callout p+p{margin-top:8px}
@@ -84,7 +90,7 @@ tr.low-avail:hover{background:#FFF4DE}
 .avail-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:#8a5a00;background:#FDECC8;border:1px solid #E8B84B;border-radius:20px;padding:2px 8px;margin-top:7px;cursor:help;white-space:normal}
 
 /* ---------- our notes (editable overlay) ---------- */
-.notes-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;background:#F3F0FF;border:1px solid #DCD3F7;border-radius:4px;padding:12px 16px;margin-bottom:16px;flex-wrap:wrap}
+.notes-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;background:linear-gradient(120deg,#F3F0FF,#EDE7FE);border:1px solid #DCD3F7;border-radius:4px;padding:12px 16px;margin-bottom:16px;flex-wrap:wrap}
 .notes-bar-txt{font-size:12.5px;color:#4A3A8C;line-height:1.5;max-width:70ch}
 .show-elim{font-family:var(--mono);font-size:11px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:pointer}
 .overlay-status{font-size:8px;color:var(--ink-faint);cursor:help;vertical-align:2px}
@@ -111,10 +117,44 @@ tr.low-avail:hover{background:#FFF4DE}
 tr.is-eliminated{opacity:.5}
 tr.is-eliminated .veh-name{text-decoration:line-through}
 tr.is-eliminated[hidden]{display:none}
-.table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card)}
+.table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card);box-shadow:0 1px 2px rgba(11,11,11,.04)}
+
+/* ---------- hero slideshow ---------- */
+.hero-slideshow{
+  position:relative;margin-top:22px;height:300px;border-radius:8px;overflow:hidden;
+  background:linear-gradient(135deg,#14151a,#23262f);box-shadow:0 8px 24px rgba(11,11,11,.16);outline:none;
+}
+.hero-track{position:relative;width:100%;height:100%}
+.hero-slide{
+  position:absolute;inset:0;opacity:0;transition:opacity .5s ease;display:flex;align-items:flex-end;
+}
+.hero-slide.on{opacity:1;z-index:1}
+.hero-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hero-slide .hero-noimg{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:linear-gradient(135deg,#1c2a3f,#2a1f3f);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.04em;line-height:1.6;
+}
+.hero-slide .hero-caption{
+  position:relative;z-index:2;width:100%;padding:20px 76px 18px 24px;
+  background:linear-gradient(0deg,rgba(0,0,0,.72),rgba(0,0,0,0));color:#fff;
+}
+.hero-caption .hero-name{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+.hero-caption .hero-sub{font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.72);margin-top:4px;letter-spacing:.02em}
+.hero-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.35);background:rgba(11,11,11,.35);color:#fff;font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:background .15s ease;
+}
+.hero-arrow:hover{background:rgba(11,11,11,.6)}
+.hero-prev{left:14px}
+.hero-next{right:14px}
+.hero-dots{position:absolute;right:16px;bottom:16px;z-index:3;display:flex;gap:6px}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);border:0;padding:0;cursor:pointer;transition:background .15s ease,transform .15s ease}
+.hero-dot.on{background:var(--seq-250);transform:scale(1.3)}
 table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;min-width:1180px}
 table.cmp thead th{
-  position:sticky;top:0;background:var(--ink);color:#fff;z-index:5;
+  position:sticky;top:0;background:linear-gradient(180deg,#17181c,var(--ink));color:#fff;z-index:5;
   font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
   text-align:left;padding:11px 12px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.08);
 }
@@ -157,7 +197,7 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 .price-est{font-family:var(--display);font-weight:700;color:var(--ink);font-size:14.5px}
 .score-cell{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .score-track{width:52px;height:6px;background:var(--rule);border-radius:3px;overflow:hidden;flex-shrink:0}
-.score-fill{height:100%;border-radius:3px;background:var(--s1)}
+.score-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--seq-250),var(--s1))}
 .score-num{font-family:var(--mono);font-size:12px;color:var(--ink);width:26px}
 .na{color:var(--ink-faint);font-style:italic}
 .comfort-list{margin:0;padding-left:15px;font-size:13px}
@@ -166,7 +206,9 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 
 /* ---------- charts ---------- */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.chart-card{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:22px 24px}
+.chart-card{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:22px 24px;position:relative;box-shadow:0 1px 2px rgba(11,11,11,.04);transition:box-shadow .18s ease,transform .18s ease}
+.chart-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:4px 4px 0 0;background:linear-gradient(90deg,var(--s1),var(--s3))}
+.chart-card:hover{box-shadow:0 10px 24px rgba(11,11,11,.08);transform:translateY(-2px)}
 .chart-card h3{font-family:var(--display);font-weight:700;font-size:15.5px;margin:0 0 3px;letter-spacing:-.01em}
 .chart-card .chart-note{font-size:12.5px;color:var(--ink-faint);margin:0 0 16px;line-height:1.5}
 .chart-card svg{width:100%;height:auto;overflow:visible}
@@ -190,6 +232,8 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 .radar-chip[data-slot="0"].on{background:var(--s1);border-color:var(--s1)}
 .radar-chip[data-slot="1"].on{background:var(--s2);border-color:var(--s2)}
 .radar-chip[data-slot="2"].on{background:var(--s3);border-color:var(--s3)}
+.radar-chip .used-badge{font-size:9px;letter-spacing:.04em;opacity:.65;margin-left:4px;text-transform:uppercase}
+.radar-chip.used{border-style:dashed}
 .chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-family:var(--mono);font-size:10.5px;color:var(--ink-soft)}
 .chart-legend span{display:flex;align-items:center;gap:6px}
 .chart-legend i{width:10px;height:10px;border-radius:2px;display:block}
@@ -215,9 +259,10 @@ footer{padding:44px 0 70px}
 </head>
 <body>
 
+<div class="accent-bar"></div>
 <header class="masthead">
   <div class="wrap">
-    <p class="eyebrow">Buyer's comparison · Crossover EVs · Updated August 2026</p>
+    <p class="eyebrow">Buyer's comparison · Crossover EVs · Updated September 2026</p>
     <h1>Every crossover EV that starts under $45,000, trim by trim.</h1>
   </div>
 </header>
@@ -270,6 +315,13 @@ footer{padding:44px 0 70px}
       <h3>Not shown on this tab</h3>
       <p><b>Subaru Uncharted</b> — all-new for 2026, so no 2025 model year exists to buy used. <b>Nissan Leaf</b> — the crossover body is also new for 2026; a used 2025 Leaf is the previous, hatchback-bodied generation and doesn't meet this page's body-style criteria. Both remain on the "New for 2026" tab.</p>
     </div>
+
+    <div class="hero-slideshow" id="heroSlideshow" aria-roledescription="carousel" aria-label="Vehicle photos" tabindex="0">
+      <div class="hero-track" id="heroTrack"></div>
+      <button class="hero-arrow hero-prev" id="heroPrev" type="button" aria-label="Previous vehicle">&#10094;</button>
+      <button class="hero-arrow hero-next" id="heroNext" type="button" aria-label="Next vehicle">&#10095;</button>
+      <div class="hero-dots" id="heroDots"></div>
+    </div>
   </div>
 </section>
 
@@ -292,7 +344,7 @@ footer{padding:44px 0 70px}
 
       <div class="chart-card">
         <h3>Model shape comparison</h3>
-        <p class="chart-note">Pick up to three models. Each axis is normalized 0–10 across the fleet, so bigger is always better — including on price and upkeep, which are inverted.</p>
+        <p class="chart-note">Pick up to three — new trims or used &rsquo;25 examples, mix freely. Each axis is normalized 0–10 across every new and used row shown on this page, so bigger is always better — including on price and upkeep, which are inverted.</p>
         <div class="radar-picker" id="radarPicker"></div>
         <div class="chart-wrap"><svg id="radarSvg" viewBox="0 0 380 340"></svg></div>
       </div>
@@ -356,10 +408,15 @@ footer{padding:44px 0 70px}
       <dd>A row is flagged when 2025 U.S. sales volume was unusually low relative to the rest of this fleet, meaning a real search for a sub-10,000-mile 2025 example will likely turn up far fewer listings even though the typical price qualifies. The Volvo EX30 sold 5,409 U.S. units in 2025 — its first American model year — and Volvo has since announced it's ending U.S. EX30 sales, so that population is fixed and won't grow. The VinFast VF8 is flagged even harder: VinFast doesn't publish a clean full-year, model-specific U.S. sales figure, but reported registrations show just 797 VF8s in the U.S. in the first half of 2025 alone — an order of magnitude below every other model here. The Kia Niro EV's exact 2025 EV-only volume is also unclear (Kia's own reporting combines Niro hybrid, plug-in hybrid, and EV sales into one number), but nothing found suggests a scarcity on the scale of the EX30 or VF8, so it isn't flagged.</dd>
 
       <dt>Why the Hyundai Kona Electric isn't included</dt>
-      <dd>Hyundai paused U.S. production of the Kona Electric for model year 2026 after a 41% year-over-year sales drop following the federal credit's expiration; dealers are selling remaining 2025-MY inventory as new, with no confirmed 2026/2027 U.S. relaunch date as of this writing. Since this page compares "the newest models," it's excluded rather than shown against a stale model year — the 2025 Kona Electric started at $32,875 (SE) if you want to compare it yourself.</dd>
+      <dd>Hyundai paused U.S. production of the Kona Electric for model year 2026 after a 41% year-over-year sales drop following the federal credit's expiration; dealers are selling remaining 2025-MY inventory as new. As of this September 2026 update, Hyundai's plan is to resume production as a 2027 model (SE trim only, ~200-mile range, smaller 48.6kWh battery), targeted to restart around mid-2026 — but no confirmed dealer on-sale date has been found yet. Since this page compares "the newest models," it stays excluded rather than shown against a stale model year — the 2025 Kona Electric started at $32,875 (SE) if you want to compare it yourself.</dd>
+
+      <dt>September 2026 update notes</dt>
+      <dd><b>Added: Chevrolet Equinox EV.</b> A gap in the original research pass — it's sold in the US for MY2026, is crossover-bodied, and all three trims (LT1 $34,995, LT2 $41,795, RS $44,095) clear the $45,000 threshold. It was the top-selling non-Tesla EV in the US for 2025 (57,945 units), so it isn't low-availability-flagged on the Used '25 tab. Only FWD pricing is shown; AWD variants exist at added cost but weren't sourced this pass.</dd>
+      <dd><b>Kia Niro EV — last model year notice:</b> multiple sources now report MY2026 will be the Niro EV's final model year in the US. Pricing and specs on this page are unchanged, but expect it to disappear from future updates once Kia confirms an end date.</dd>
+      <dd><b>VinFast VF8 cargo correction:</b> the Eco trim's cargo figure was corrected from 48.4 to 13.2 cu ft — 48.4 is the seats-folded maximum, not the "behind rear seats" figure this column tracks for every other row. Both Eco and the newly added Plus trim now show 13.2 cu ft for consistency.</dd>
 
       <dt>Other models considered and excluded</dt>
-      <dd><b>Over the $45,000 threshold:</b> Volkswagen ID.4 (base now $45,095), Chevrolet Blazer EV ($46,495), Honda Prologue ($47,400), Cadillac Optiq (~$50,900), Genesis GV60 (~$52,525), Buick Electra E5 (exactly $45,000, not under it), Polestar 4 ($56,300 — not sold at the $46,400 figure once quoted for it elsewhere, corrected here), Jeep Wagoneer S ($67,995) and Recon ($65,000), and the VinFast VF8's own Plus trim (previously ~$51,800).</dd>
+      <dd><b>Over the $45,000 threshold:</b> Volkswagen ID.4 (base now $45,095), Chevrolet Blazer EV ($46,495), Honda Prologue ($47,400), Cadillac Optiq (~$50,900), Genesis GV60 (~$52,525), Buick Electra E5 (exactly $45,000, not under it), Polestar 4 ($56,300 — not sold at the $46,400 figure once quoted for it elsewhere, corrected here), Jeep Wagoneer S ($67,995) and Recon ($65,000), and Rivian R2 (cheapest available trim is Premium at $53,990; the promised ~$45k Standard RWD trim doesn't arrive until early 2027). The VinFast VF8 Plus dropped to $44,900 as of a May 2026 price cut and now qualifies — it's included above as of this update.</dd>
 
       <dt>How close did excluded models come?</dt>
       <dd><b>On seating (non-crossover candidates):</b> the BMW i4 is the one genuinely borderline case — reviewers describe its seat height as sitting between a sports sedan and an SUV, with ground clearance (4.9 in) higher than a typical low sedan but still short of any crossover on this page. It doesn't clear the price bar either way, though: new base is $52,800, and even sub-10,000-mile 2025 used examples mostly run $44,000–$67,000, with only rare outliers dipping toward $44,000. Everything else checked resolved cleanly rather than sitting in between: the Hyundai Kona Electric and Kia Niro EV are both crossover-classified despite compact proportions (not non-crossover candidates at all), the VW ID.3 and ID.7 were never brought to the US, and no electric wagon currently sells here under $45,000.</dd>
@@ -386,6 +443,9 @@ footer{padding:44px 0 70px}
       <li>Used '25 tab — Kia Niro EV: exact 2025 EV-only US sales volume (Kia's reporting combines it with Niro hybrid/PHEV)</li>
       <li>Used '25 tab — VinFast VF8: a clean full-year, model-specific 2025 US sales total (only a first-half figure is published; see the Low used-availability flag entry)</li>
       <li>Used '25 tab — Tesla Model Y: exact 2025 Long Range trim specs (that row reuses the 2026 Standard trim's specs as the closest available approximation, since 2025 had no Standard trim)</li>
+      <li>VinFast VF8 Plus: trim-specific MPGe not published; efficiency score uses a range/battery-derived equivalent (see Efficiency score methodology)</li>
+      <li>Chevrolet Equinox EV RS: base price shown as $44,095 (one source gave $44,200 — a $105 spread, flagged with † in the table rather than picked silently); 0–60 time omitted (sources split 7.7s vs. 8.0s); MPGe assumed equal to LT1/LT2's confirmed 108 (same single-motor FWD powertrain, no trim-specific EPA test found)</li>
+      <li>Used '25 tab — Chevrolet Equinox EV: KBB private-party value (~$20,600, used here) and CarGurus' blended-trim nationwide asking-price average ($27,901) diverge by roughly $7,000; KBB was used for methodology consistency with other rows</li>
     </ul>
 
     <dt style="font-family:var(--display);font-weight:700;font-size:14.5px;margin:26px 0 8px">Primary sources</dt>
@@ -413,6 +473,17 @@ footer{padding:44px 0 70px}
       <li>Consumer Reports — <a href="https://www.consumerreports.org/cars/hybrids-evs/will-an-electric-car-save-you-money-a9436870083/" target="_blank" rel="noopener">EV maintenance cost study</a></li>
       <li>Insurify — <a href="https://insurify.com/car-insurance/report/electric-vehicle-insurance-costs/" target="_blank" rel="noopener">2026 EV insurance report</a></li>
       <li>Electrive — <a href="https://www.electrive.com/2026/02/05/hyundai-kona-electric-to-skip-2026-model-year-in-us-market/" target="_blank" rel="noopener">Kona Electric 2026 production pause</a></li>
+      <li>Electrek — <a href="https://electrek.co/2026/02/04/hyundai-pausing-production-electric-suv/" target="_blank" rel="noopener">Kona Electric 2027 relaunch plan</a>, <a href="https://electrek.co/2026/01/13/chevy-equinox-ev-hit-2025/" target="_blank" rel="noopener">Equinox EV 2025 US sales volume</a></li>
+      <li>InsideEVs — <a href="https://insideevs.com/news/786442/2026-hyundai-kona-ev-pause-us/" target="_blank" rel="noopener">Kona Electric relaunch detail</a>, <a href="https://insideevs.com/news/789597/rivian-r2-launch-pricing-specs-2026/" target="_blank" rel="noopener">Rivian R2 launch pricing</a>, <a href="https://insideevs.com/news/718943/chevrolet-equinox-ev-epa-range-consumption/" target="_blank" rel="noopener">Equinox EV EPA range</a></li>
+      <li>BusinessWire — <a href="https://www.businesswire.com/news/home/20260525246530/en/" target="_blank" rel="noopener">VF8 Plus price cut to $44,900</a></li>
+      <li>GM Authority — <a href="https://gmauthority.com/blog/2026/01/2026-chevy-equinox-ev-gets-msrp-drop-but-freight-charge-increase/" target="_blank" rel="noopener">Equinox EV MSRP by trim</a></li>
+      <li>U.S. News — <a href="https://cars.usnews.com/cars-trucks/chevrolet/equinox-ev" target="_blank" rel="noopener">Equinox EV specs</a></li>
+      <li>Speed Sport Life — <a href="https://www.speedsportlife.com/2026/01/22/2026-chevy-equinox-ev-rs/" target="_blank" rel="noopener">Equinox EV RS pricing &amp; 0–60</a></li>
+      <li>Recharged — <a href="https://recharged.com/articles/chevrolet-equinox-ev-battery-warranty-details" target="_blank" rel="noopener">Equinox EV battery warranty</a></li>
+      <li>Greg Hubler Chevrolet — <a href="https://www.greghublerchevy.com/chevrolet-research/equinox-ev/2026-chevy-equinox-ev-cargo-space-and-interior-dimensions/" target="_blank" rel="noopener">Equinox EV cargo dimensions</a></li>
+      <li>KBB — <a href="https://www.kbb.com/chevrolet/equinox-ev/2025/lt-1-sport-utility-4d/" target="_blank" rel="noopener">Equinox EV LT1 used value</a></li>
+      <li>CarGurus — <a href="https://www.cargurus.com/Cars/l-Used-2025-Chevrolet-Equinox-EV-c33593" target="_blank" rel="noopener">Equinox EV listings (cross-check)</a></li>
+      <li>Autoblog — <a href="https://www.autoblog.com/news/2026-kia-niro-ev-pricing" target="_blank" rel="noopener">Niro EV — last model year notice</a></li>
     </ul>
   </div>
 </section>
@@ -437,7 +508,7 @@ footer{padding:44px 0 70px}
    cargo: cu ft behind rear seats (as reported) | warranty: {basic, battery} strings
    comfort: array of short feature phrases
 */
-const MODELS = [
+const SEED_MODELS = [
   { id:'niro', make:'Kia', model:'Niro EV', year:2026,
     warranty:{basic:'5/60', battery:'10/100 (inferred from Kia’s general EV policy — not model-specific)'},
     trims:[
@@ -506,13 +577,115 @@ const MODELS = [
   { id:'vf8', make:'VinFast', model:'VF8', year:2026,
     warranty:{basic:'10/125', battery:'10yr / unlimited miles (to ~70% capacity floor)'},
     trims:[
-      {name:'Eco', msrp:39900, drivetrain:'AWD', range:256, mpge:73, batteryKwh:87.7, dcfcKw:110, zeroToSixty:5.9, cargo:48.4, comfort:['Heated front seats standard','Head-up display standard']},
+      {name:'Eco', msrp:39900, drivetrain:'AWD', range:256, mpge:73, batteryKwh:87.7, dcfcKw:110, zeroToSixty:5.9, cargo:13.2, comfort:['Heated front seats standard','Head-up display standard']},
+      {name:'Plus', msrp:44900, drivetrain:'AWD', range:235, mpge:null, batteryKwh:87.7, dcfcKw:150, zeroToSixty:5.8, cargo:13.2, comfort:['Heated front seats standard','Head-up display standard']},
+    ]},
+  { id:'equinox', make:'Chevrolet', model:'Equinox EV', year:2026,
+    warranty:{basic:'3/36', battery:'8/100'},
+    trims:[
+      {name:'LT1', msrp:34995, drivetrain:'FWD', range:319, mpge:108, batteryKwh:85, dcfcKw:150, zeroToSixty:7.7, cargo:26.4, comfort:['Heated front seats/steering wheel available via Comfort Package — not standard']},
+      {name:'LT2', msrp:41795, drivetrain:'FWD', range:319, mpge:108, batteryKwh:85, dcfcKw:150, zeroToSixty:7.7, cargo:26.4, comfort:['Heated front seats standard','Heated steering wheel standard','Power driver’s seat with lumbar']},
+      {name:'RS', msrp:44095, priceFlag:true, drivetrain:'FWD', range:319, mpge:108, batteryKwh:85, dcfcKw:150, zeroToSixty:null, cargo:26.4, comfort:['Heated front seats &amp; steering wheel standard','Ventilated front seats &amp; dual-zone climate via Convenience Package II']},
     ]},
 ];
+
+// usedPrice: typical market listing price for a <10,000-mile 2025-model-year example (sourced — see Methodology)
+// sales2025 / lowAvail / availNote: 2025 US sales volume, used only to flag rows where real used inventory will be thin
+const SEED_USED_ROWS = [
+  {modelId:'niro', usedPrice:26969, sales2025:null, lowAvail:false, availNote:''},
+  {modelId:'bz', usedPrice:23230, sales2025:15609, lowAvail:false, availNote:''},
+  {modelId:'solterra', usedPrice:27400, sales2025:10715, lowAvail:false, availNote:''},
+  {modelId:'ioniq5', usedPrice:27400, sales2025:47039, lowAvail:false, availNote:''},
+  {modelId:'ev6', usedPrice:28000, sales2025:12933, lowAvail:false, availNote:''},
+  {modelId:'ex30', usedPrice:27780, sales2025:5409, lowAvail:true, availNote:'5,409 US units sold in 2025 (its first US model year) — the lowest of any model here, and Volvo has since announced it is ending US EX30 sales, so this population won’t grow. See Methodology.'},
+  {modelId:'machE', usedPrice:33090, sales2025:51620, lowAvail:false, availNote:''},
+  {modelId:'modely', usedPrice:37090, sales2025:345000, lowAvail:false, availNote:'', trimNameOverride:'Long Range'},
+  {modelId:'vf8', usedPrice:31040, sales2025:null, lowAvail:true, availNote:'797 VF8 registrations in the US in just H1 2025 (fullest figure published) — by far the thinnest 2025 population on this list. See Methodology.'},
+  {modelId:'equinox', usedPrice:20600, sales2025:57945, lowAvail:false, availNote:'', trimNameOverride:'LT1'},
+];
+
+/* ============ LIVE DATA (Google Sheet, via the same Apps Script as "our notes") ============
+   The Trims and Used tabs in the linked Sheet are the editable source of the primary table.
+   Edit a cell there and it appears here on next page load — no code change needed. If the
+   Sheet is unreachable or those tabs are empty, the SEED_MODELS/SEED_USED_ROWS above (kept
+   in sync manually) are used instead, so the page never breaks. See overlay-backend.gs.
+*/
+const DATA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzgROKYTYXJMVlwKy_HC0Yy0mWDY5dI1j7iPZWZBh8eDq7bB2gVM38pMfIA_Wwz_XHx/exec';
+function numOrNull_(v){
+  if(v===''||v==null) return null;
+  const n = Number(v);
+  return Number.isNaN(n) ? null : n;
+}
+function truthy_(v){ return v===true || v==='TRUE' || v==='true' || v===1 || v==='1'; }
+function groupTrimRows_(trimRows){
+  const byModel = {};
+  const order = [];
+  trimRows.forEach(r=>{
+    const id = r.modelId;
+    if(!id || !r.trimName) return;
+    if(!byModel[id]){
+      byModel[id] = {
+        id, make: r.make || '', model: r.model || '', year: numOrNull_(r.year) || new Date().getFullYear(),
+        warranty: { basic: r.warrantyBasic || '', battery: r.warrantyBattery || '' },
+        trims: [],
+      };
+      order.push(id);
+    }
+    byModel[id].trims.push({
+      name: r.trimName,
+      msrp: numOrNull_(r.msrp),
+      drivetrain: r.drivetrain || '',
+      range: numOrNull_(r.range),
+      mpge: numOrNull_(r.mpge),
+      batteryKwh: numOrNull_(r.batteryKwh),
+      dcfcKw: numOrNull_(r.dcfcKw),
+      zeroToSixty: numOrNull_(r.zeroToSixty),
+      cargo: numOrNull_(r.cargo),
+      comfort: String(r.comfort||'').split('|').map(s=>s.trim()).filter(Boolean),
+      priceFlag: truthy_(r.priceFlag),
+    });
+  });
+  return order.map(id=>byModel[id]);
+}
+function normalizeUsedRow_(r){
+  return {
+    modelId: r.modelId,
+    usedPrice: numOrNull_(r.usedPrice),
+    sales2025: numOrNull_(r.sales2025),
+    lowAvail: truthy_(r.lowAvail),
+    availNote: r.availNote || '',
+    trimNameOverride: r.trimNameOverride || undefined,
+  };
+}
+async function loadTableData_(){
+  try{
+    const res = await fetch(DATA_ENDPOINT, {method:'GET'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json = await res.json();
+    const trimRows = Array.isArray(json.trims) ? json.trims : [];
+    const usedRowsRaw = Array.isArray(json.used) ? json.used : [];
+    const models = trimRows.length ? groupTrimRows_(trimRows) : SEED_MODELS;
+    const usedRows = usedRowsRaw.length ? usedRowsRaw.map(normalizeUsedRow_) : SEED_USED_ROWS;
+    return { models, usedRows, sheetData: trimRows.length>0 };
+  }catch(err){
+    console.warn('Sheet-backed table data unavailable, using embedded fallback:', err);
+    return { models: SEED_MODELS, usedRows: SEED_USED_ROWS, sheetData:false };
+  }
+}
+loadTableData_().then(({models, usedRows})=> renderApp(models, usedRows));
+
+function renderApp(MODELS, USED_ROWS){
 
 /* ============ DERIVED FIELDS (computed once, applied uniformly) ============ */
 const ALL_TRIMS = [];
 MODELS.forEach(m => m.trims.forEach(t => ALL_TRIMS.push(Object.assign({modelRef:m}, t))));
+
+// Purely decorative per-model accent (row dot in the table) — cycles the three brand
+// accent colors so the table is easier to visually scan; carries no data meaning.
+const MODEL_ACCENTS = ['var(--s1)','var(--s2)','var(--s3)'];
+const modelAccentIndex = {};
+MODELS.forEach((m,i)=>{ modelAccentIndex[m.id] = MODEL_ACCENTS[i % MODEL_ACCENTS.length]; });
+function modelAccent(id){ return modelAccentIndex[id] || 'var(--s1)'; }
 
 function effMpge(t){
   if(t.mpge!=null) return t.mpge;
@@ -576,7 +749,7 @@ function trimRowHTML(m, t, isBase){
   return `
     <tr class="${isBase?'base-row':'trim-row'}" data-model="${m.id}" ${isBase?'':'hidden'}>
       <td class="veh-cell">
-        ${isBase ? `<div class="veh-name" title="Hover for photos"><span class="veh-dot"></span>${m.make} ${m.model}</div>` : ''}
+        ${isBase ? `<div class="veh-name" title="Hover for photos"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>` : ''}
         <div class="veh-trim">${t.name}${t.priceFlag?' †':''} · ${t.drivetrain} · ${m.year}</div>
         ${isBase && m.trims.length>1 ? `<button class="expand-btn" data-toggle="${m.id}">+${m.trims.length-1} more trim${m.trims.length>2?'s':''}</button>`:''}
       </td>
@@ -623,19 +796,8 @@ function sortValue(m, key){
 }
 
 /* ============ USED '25 MARKET TAB ============ */
-// usedPrice: typical market listing price for a <10,000-mile 2025-model-year example (sourced — see Methodology)
-// sales2025 / lowAvail / availNote: 2025 US sales volume, used only to flag rows where real used inventory will be thin
-const USED_ROWS = [
-  {modelId:'niro', usedPrice:26969, sales2025:null, lowAvail:false, availNote:''},
-  {modelId:'bz', usedPrice:23230, sales2025:15609, lowAvail:false, availNote:''},
-  {modelId:'solterra', usedPrice:27400, sales2025:10715, lowAvail:false, availNote:''},
-  {modelId:'ioniq5', usedPrice:27400, sales2025:47039, lowAvail:false, availNote:''},
-  {modelId:'ev6', usedPrice:28000, sales2025:12933, lowAvail:false, availNote:''},
-  {modelId:'ex30', usedPrice:27780, sales2025:5409, lowAvail:true, availNote:'5,409 US units sold in 2025 (its first US model year) — the lowest of any model here, and Volvo has since announced it is ending US EX30 sales, so this population won’t grow. See Methodology.'},
-  {modelId:'machE', usedPrice:33090, sales2025:51620, lowAvail:false, availNote:''},
-  {modelId:'modely', usedPrice:37090, sales2025:345000, lowAvail:false, availNote:'', trimNameOverride:'Long Range'},
-  {modelId:'vf8', usedPrice:31040, sales2025:null, lowAvail:true, availNote:'797 VF8 registrations in the US in just H1 2025 (fullest figure published) — by far the thinnest 2025 population on this list. See Methodology.'},
-];
+// Seed data now lives in SEED_USED_ROWS, declared above with SEED_MODELS — USED_ROWS below
+// is a parameter of renderApp(), populated either from the linked Sheet or this seed.
 function usedRowTrim(row){
   const m = MODELS.find(x=>x.id===row.modelId);
   const base = [...m.trims].sort((a,b)=>a.msrp-b.msrp)[0];
@@ -650,7 +812,7 @@ function usedRowHTML(row){
   return `
     <tr class="base-row${row.lowAvail?' low-avail':''}" data-used-model="${row.modelId}">
       <td class="veh-cell">
-        <div class="veh-name" title="Hover for photos"><span class="veh-dot"></span>${m.make} ${m.model}</div>
+        <div class="veh-name" title="Hover for photos"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>
         <div class="veh-trim">${t.name} trim &middot; ${t.drivetrain} &middot; 2025</div>
         ${row.lowAvail?`<span class="avail-badge" title="${row.availNote}">&#9888; Low used availability</span>`:''}
       </td>
@@ -810,16 +972,26 @@ const BASE = MODELS.map(m => Object.assign({modelRef:m}, [...m.trims].sort((a,b)
 })();
 
 /* ============ RADAR ============ */
+// Selectable pool covers both tabs: new base trims + used '25 rows, each carrying its own
+// trim-shaped object so radarAxes() can score either kind identically.
+const RADAR_CANDIDATES = [
+  ...BASE.map(t => ({ key:'new:'+t.modelRef.id, label:`${t.modelRef.make} ${t.modelRef.model}`, used:false, t })),
+  ...USED_ROWS.map(row => {
+    const t = usedRowTrim(row);
+    return { key:'used:'+row.modelId, label:`${t.modelRef.make} ${t.modelRef.model}`, used:true, t };
+  }),
+];
 const radarSelected = [];
 const radarColors = ['var(--s1)','var(--s2)','var(--s3)'];
 function radarAxes(t){
+  const pool = RADAR_CANDIDATES.map(c=>c.t);
   const eff = efficiencyScore(t) ?? 1;
   const rech = rechargeScore(t) ?? 1;
-  const cargoVals = BASE.map(b=>b.cargo).filter(v=>v!=null);
+  const cargoVals = pool.map(b=>b.cargo).filter(v=>v!=null);
   const cargo = t.cargo!=null ? 1+9*normalize(t.cargo, Math.min(...cargoVals), Math.max(...cargoVals)) : 1;
-  const priceVals = BASE.map(b=>b.msrp);
+  const priceVals = pool.map(b=>b.msrp);
   const afford = 1+9*(1-normalize(t.msrp, Math.min(...priceVals), Math.max(...priceVals)));
-  const upVals = BASE.map(b=>upkeep5yr(b).total);
+  const upVals = pool.map(b=>upkeep5yr(b).total);
   const up = upkeep5yr(t).total;
   const lowUpkeep = 1+9*(1-normalize(up, Math.min(...upVals), Math.max(...upVals)));
   return [eff, rech, cargo, afford, lowUpkeep];
@@ -845,8 +1017,8 @@ function drawRadar(){
     const lx = cx + (R+26)*Math.cos(angle(i)), ly = cy + (R+26)*Math.sin(angle(i));
     s += `<text class="axis-label" x="${lx}" y="${ly}" text-anchor="middle">${RADAR_LABELS[i]}</text>`;
   }
-  radarSelected.forEach((t,si)=>{
-    const vals = radarAxes(t);
+  radarSelected.forEach((r,si)=>{
+    const vals = radarAxes(r.t);
     let poly='';
     for(let i=0;i<n;i++){ const [px,py]=ptAt(i,vals[i]); poly += (i===0?'M':'L')+px+','+py+' '; }
     poly += 'Z';
@@ -857,17 +1029,19 @@ function drawRadar(){
 }
 function drawRadarPicker(){
   const wrap = document.getElementById('radarPicker');
-  wrap.innerHTML = MODELS.map(m=>`<button class="radar-chip" data-id="${m.id}">${m.model}</button>`).join('');
+  wrap.innerHTML = RADAR_CANDIDATES.map(c=>
+    `<button class="radar-chip${c.used?' used':''}" data-key="${c.key}" title="${c.label}${c.used?' — used ’25':' — new'}">${c.label}${c.used?' <span class="used-badge">used</span>':''}</button>`
+  ).join('');
   wrap.querySelectorAll('.radar-chip').forEach(chip=>{
     chip.addEventListener('click', ()=>{
-      const id = chip.dataset.id;
-      const t = BASE.find(b=>b.modelRef.id===id);
-      const idx = radarSelected.findIndex(r=>r.modelRef.id===id);
+      const key = chip.dataset.key;
+      const cand = RADAR_CANDIDATES.find(c=>c.key===key);
+      const idx = radarSelected.findIndex(r=>r.key===key);
       if(idx>=0){ radarSelected.splice(idx,1); }
-      else { if(radarSelected.length>=3) radarSelected.shift(); radarSelected.push(t); }
+      else { if(radarSelected.length>=3) radarSelected.shift(); radarSelected.push(cand); }
       document.querySelectorAll('.radar-chip').forEach(c=>{ c.classList.remove('on'); c.removeAttribute('data-slot'); });
       radarSelected.forEach((r,si)=>{
-        const c = wrap.querySelector(`[data-id="${r.modelRef.id}"]`);
+        const c = wrap.querySelector(`[data-key="${r.key}"]`);
         c.classList.add('on'); c.setAttribute('data-slot', si);
       });
       drawRadar();
@@ -875,9 +1049,9 @@ function drawRadarPicker(){
   });
 }
 drawRadarPicker();
-// default: seed with two illustrative models
-['bz','ioniq5'].forEach(id=>{
-  const chip = document.querySelector(`.radar-chip[data-id="${id}"]`);
+// default: seed with two illustrative new-tab models
+['new:bz','new:ioniq5'].forEach(key=>{
+  const chip = document.querySelector(`.radar-chip[data-key="${key}"]`);
   if(chip) chip.click();
 });
 
@@ -927,7 +1101,7 @@ drawRadarPicker();
 })();
 
 /* ============ OUR NOTES (shared editable overlay, via Google Sheet + Apps Script) ============ */
-const OVERLAY_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzgROKYTYXJMVlwKy_HC0Yy0mWDY5dI1j7iPZWZBh8eDq7bB2gVM38pMfIA_Wwz_XHx/exec';
+const OVERLAY_ENDPOINT = DATA_ENDPOINT; // same Apps Script deployment, now also serving Trims/Used
 const overlayData = {}; // key ("new:modelId" / "used:modelId") -> {eliminated, rating, note}
 const overlayStatusEl = document.getElementById('overlayStatus');
 const elimCountEl = document.getElementById('elimCount');
@@ -1047,6 +1221,75 @@ Object.keys(MODELS.reduce((a,m)=>(a[m.id]=1,a),{})).forEach(id=>{
     interior: `images/${id}-interior.jpg`,
   };
 });
+
+/* ============ HERO SLIDESHOW (below the primary table) ============ */
+// Reuses the same images/<modelId>-exterior.jpg convention as the hover preview above —
+// drop a photo in with the matching name and it swaps in for the "Photo coming soon" card.
+(function(){
+  const track = document.getElementById('heroTrack');
+  if(!track) return;
+  const stage = document.getElementById('heroSlideshow');
+  const dotsWrap = document.getElementById('heroDots');
+  const prevBtn = document.getElementById('heroPrev');
+  const nextBtn = document.getElementById('heroNext');
+
+  const slides = MODELS.map(m=>{
+    const base = BASE.find(b=>b.modelRef.id===m.id);
+    return {
+      id: m.id,
+      name: `${m.make} ${m.model}`,
+      price: base ? fmtUSD(vaPrice(base)) : null,
+      img: VEHICLE_IMAGES[m.id].exterior,
+    };
+  });
+
+  track.innerHTML = slides.map((s,i)=>`
+    <div class="hero-slide${i===0?' on':''}" data-i="${i}">
+      <div class="hero-noimg" hidden>${s.name}<br>Photo coming soon</div>
+      <div class="hero-caption">
+        <div class="hero-name">${s.name}</div>
+        <div class="hero-sub">${s.price ? 'From '+s.price+' est. VA price' : ''}</div>
+      </div>
+    </div>`).join('');
+
+  track.querySelectorAll('.hero-slide').forEach((slideEl,i)=>{
+    const s = slides[i];
+    const noimg = slideEl.querySelector('.hero-noimg');
+    const img = new Image();
+    img.alt = s.name;
+    img.addEventListener('error', ()=>{ noimg.hidden = false; }, {once:true});
+    img.addEventListener('load', ()=>{ slideEl.insertBefore(img, slideEl.firstChild); }, {once:true});
+    img.src = s.img;
+  });
+
+  dotsWrap.innerHTML = slides.map((s,i)=>`<button class="hero-dot${i===0?' on':''}" type="button" data-i="${i}" aria-label="Show ${s.name}"></button>`).join('');
+
+  let current = 0;
+  function goTo(i){
+    current = (i + slides.length) % slides.length;
+    track.querySelectorAll('.hero-slide').forEach((el,idx)=> el.classList.toggle('on', idx===current));
+    dotsWrap.querySelectorAll('.hero-dot').forEach((el,idx)=> el.classList.toggle('on', idx===current));
+  }
+  prevBtn.addEventListener('click', ()=>{ goTo(current-1); resetTimer(); });
+  nextBtn.addEventListener('click', ()=>{ goTo(current+1); resetTimer(); });
+  dotsWrap.querySelectorAll('.hero-dot').forEach(dot=>{
+    dot.addEventListener('click', ()=>{ goTo(+dot.dataset.i); resetTimer(); });
+  });
+
+  let timer;
+  function resetTimer(){
+    clearInterval(timer);
+    timer = setInterval(()=> goTo(current+1), 4500);
+  }
+  stage.addEventListener('mouseenter', ()=> clearInterval(timer));
+  stage.addEventListener('mouseleave', resetTimer);
+  stage.addEventListener('keydown', e=>{
+    if(e.key==='ArrowLeft'){ goTo(current-1); resetTimer(); }
+    if(e.key==='ArrowRight'){ goTo(current+1); resetTimer(); }
+  });
+  resetTimer();
+})();
+
 const imgPreview = document.getElementById('imgPreview');
 const SHOT_TYPES = [['exterior','Exterior'],['frontSeat','Front seats'],['interior','Interior']];
 function showImgPreview(modelId, targetEl){
@@ -1085,6 +1328,8 @@ document.querySelectorAll('.table-scroll').forEach(scroller=>{
     if(e.target.closest('.veh-name')) hideImgPreview();
   });
 });
+
+} // end renderApp
 </script>
 </body>
 </html>
