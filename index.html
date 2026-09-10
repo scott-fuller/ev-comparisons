@@ -7,32 +7,38 @@
 <meta name="description" content="A trim-level comparison of every crossover EV currently starting under $45,000: price, efficiency, charging, warranty, cargo, acceleration, comfort, and 5-year upkeep.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#F9F9F7;
-  --card:#FFFFFF;
-  --ink:#0B0B0B;
-  --ink-soft:#52514E;
-  --ink-faint:#898781;
-  --rule:#E1E0D9;
-  --rule-soft:#ECEBE6;
+  --paper:#FFFFFF;
+  --card:#EEF1F4;
+  --ink:#252A31;
+  --ink-soft:#4A5058;
+  --ink-faint:#868C96;
+  --rule:#D7DCE2;
+  --rule-soft:#E4E8EC;
 
-  /* dataviz categorical + sequential (validated palette) */
-  --s1:#2a78d6;   /* blue   */
-  --s2:#eb6834;   /* orange */
-  --s3:#1baf7a;   /* aqua   */
-  --seq-100:#cde2fb;
-  --seq-250:#86b6ef;
-  --seq-450:#2a78d6;
-  --seq-600:#184f95;
-  --good:#0ca30c;
-  --warn:#fab219;
-  --crit:#d03b3b;
+  /* brand palette: blue dominates; teal/green support quantitative comparisons; amber used sparingly */
+  --s1:#1F5EFF;   /* Deep Electric Blue — primary buttons, links, active/selected states */
+  --s2:#F2A93B;   /* Warm Amber — highlights, value scores, warnings, standout data (used sparingly) */
+  --s3:#16A6A1;   /* Teal — range/charging/efficiency, secondary accents */
+  --seq-100:#D6F0EE;
+  --seq-250:#7FCFC9;
+  --seq-450:#16A6A1;
+  --seq-600:#0B6B67;
+  --good:#55B97A; /* Soft Green — positive ratings, savings, lower cost */
+  --warn:#F2A93B;
+  --warn-tint:#FCEACB;
+  --warn-tint-hover:#FADFAF;
+  --warn-text:#8A5A12;
+  --crit:#D03B3B;
+  --brand-tint:#E4ECFF;
+  --brand-tint-2:#D5E2FF;
+  --brand-text:#1439A6;
 
   --display:'Bricolage Grotesque',system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,monospace;
-  --body:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:'Roboto',system-ui,-apple-system,"Segoe UI",sans-serif;
   --maxw:1220px;
 }
 *{box-sizing:border-box}
@@ -49,8 +55,8 @@ a{color:var(--s1)}
 /* ---------- masthead ---------- */
 .masthead{
   padding:32px 0 20px;border-bottom:1px solid var(--rule);position:relative;overflow:hidden;
-  background:radial-gradient(680px 220px at 12% -20%,rgba(42,120,214,.08),transparent 70%),
-             radial-gradient(520px 200px at 92% 0%,rgba(27,175,122,.06),transparent 70%);
+  background:radial-gradient(680px 220px at 12% -20%,rgba(31,94,255,.08),transparent 70%),
+             radial-gradient(520px 200px at 92% 0%,rgba(22,166,161,.07),transparent 70%);
 }
 .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 20px}
 .masthead h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,4.6vw,48px);line-height:1.06;letter-spacing:-.025em;margin:0 0 16px;max-width:22ch}
@@ -63,7 +69,7 @@ a{color:var(--s1)}
 
 section{padding:52px 0;border-bottom:1px solid var(--rule)}
 #table{padding-top:28px}
-#charts{background:linear-gradient(180deg,#F6F7FB,#F9F9F7 220px)}
+#charts{background:linear-gradient(180deg,var(--card),var(--paper) 220px)}
 .sec-head{display:flex;gap:18px;align-items:baseline;margin-bottom:10px;flex-wrap:wrap}
 .sec-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:var(--ink);padding:4px 9px;border-radius:2px;flex-shrink:0}
 h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);letter-spacing:-.02em;line-height:1.1;margin:0}
@@ -72,7 +78,7 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);let
 /* ---------- callouts ---------- */
 .callouts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .callout{background:linear-gradient(135deg,var(--card),var(--seq-100) 220%);border:1px solid var(--rule);border-left:3px solid var(--s1);border-radius:3px;padding:18px 20px}
-.callout.warn{border-left-color:var(--warn);background:linear-gradient(135deg,var(--card),#FDECC8 240%)}
+.callout.warn{border-left-color:var(--warn);background:linear-gradient(135deg,var(--card),var(--warn-tint) 240%)}
 .callout h3{font-family:var(--display);font-weight:700;font-size:14.5px;margin:0 0 8px;letter-spacing:-.01em}
 .callout p{margin:0;color:var(--ink-soft);font-size:14px;line-height:1.55}
 .callout p+p{margin-top:8px}
@@ -89,14 +95,14 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);let
 .tab-btn.active{background:var(--ink);border-color:var(--ink);color:#fff;top:0;z-index:1}
 .legend-row{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin:18px 0 16px;align-items:center}
 .legend-row b{color:var(--ink-soft);font-weight:600}
-.key-swatch{display:inline-block;width:11px;height:11px;border-radius:2px;background:#FDECC8;border:1px solid #E8B84B;vertical-align:-1px;margin-right:2px}
-tr.low-avail{background:#FFFAF0}
-tr.low-avail:hover{background:#FFF4DE}
-.avail-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:#8a5a00;background:#FDECC8;border:1px solid #E8B84B;border-radius:20px;padding:2px 8px;margin-top:7px;cursor:help;white-space:normal}
+.key-swatch{display:inline-block;width:11px;height:11px;border-radius:2px;background:var(--warn-tint);border:1px solid var(--warn);vertical-align:-1px;margin-right:2px}
+tr.low-avail{background:var(--warn-tint)}
+tr.low-avail:hover{background:var(--warn-tint-hover)}
+.avail-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9.5px;letter-spacing:.03em;color:var(--warn-text);background:var(--warn-tint);border:1px solid var(--warn);border-radius:20px;padding:2px 8px;margin-top:7px;cursor:help;white-space:normal}
 
 /* ---------- our notes (editable overlay) ---------- */
-.notes-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;background:linear-gradient(120deg,#F3F0FF,#EDE7FE);border:1px solid #DCD3F7;border-radius:4px;padding:12px 16px;margin-bottom:16px;flex-wrap:wrap}
-.notes-bar-txt{font-size:12.5px;color:#4A3A8C;line-height:1.5;max-width:70ch}
+.notes-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;background:linear-gradient(120deg,var(--brand-tint),var(--brand-tint-2));border:1px solid var(--brand-tint-2);border-radius:4px;padding:12px 16px;margin-bottom:16px;flex-wrap:wrap}
+.notes-bar-txt{font-size:12.5px;color:var(--brand-text);line-height:1.5;max-width:70ch}
 .show-elim{font-family:var(--mono);font-size:11px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:6px;cursor:pointer}
 .overlay-status{font-size:8px;color:var(--ink-faint);cursor:help;vertical-align:2px}
 .overlay-status.live{color:var(--good)}
@@ -104,12 +110,12 @@ tr.low-avail:hover{background:#FFF4DE}
 .notes-cell{min-width:190px}
 .star-row{display:flex;gap:2px;margin-bottom:8px}
 .star-btn{background:none;border:0;padding:0;font-size:16px;line-height:1;cursor:pointer;color:var(--rule);width:17px}
-.star-btn.on{color:#eda100}
+.star-btn.on{color:var(--warn)}
 .note-input{
   width:100%;min-height:44px;resize:vertical;font-family:var(--body);font-size:12.5px;line-height:1.4;
   border:1px solid var(--rule);border-radius:3px;padding:6px 8px;color:var(--ink);background:#fff;margin-bottom:8px;
 }
-.note-input:focus{outline:2px solid #6a4fe0;outline-offset:1px}
+.note-input:focus{outline:2px solid var(--s1);outline-offset:1px}
 .note-saved{font-family:var(--mono);font-size:9.5px;color:var(--good);opacity:0;transition:opacity .3s ease;margin-left:6px}
 .note-saved.show{opacity:1}
 .elim-btn{
@@ -124,14 +130,14 @@ tr.is-eliminated .veh-name{text-decoration:line-through}
 tr.is-eliminated[hidden]{display:none}
 .table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:0 4px 4px 4px;background:var(--card);box-shadow:0 1px 2px rgba(11,11,11,.04);position:relative;z-index:1}
 tr.view-note-row td{
-  background:#F5F4EF;color:var(--ink-soft);font-size:13.5px;line-height:1.6;padding:14px 16px;
+  background:var(--brand-tint);color:var(--ink-soft);font-size:13.5px;line-height:1.6;padding:14px 16px;
   border-bottom:2px solid var(--rule);white-space:normal;
 }
 
 /* ---------- hero slideshow ---------- */
 .hero-slideshow{
   position:relative;margin-top:22px;height:300px;border-radius:8px;overflow:hidden;
-  background:linear-gradient(135deg,#14151a,#23262f);box-shadow:0 8px 24px rgba(11,11,11,.16);outline:none;
+  background:linear-gradient(135deg,#1A1E24,var(--ink));box-shadow:0 8px 24px rgba(11,11,11,.16);outline:none;
 }
 .hero-track{position:relative;width:100%;height:100%}
 .hero-slide{
@@ -141,7 +147,7 @@ tr.view-note-row td{
 .hero-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .hero-slide .hero-noimg{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
-  background:linear-gradient(135deg,#1c2a3f,#2a1f3f);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:11.5px;
+  background:linear-gradient(135deg,#1B2A4D,#24314D);color:rgba(255,255,255,.5);font-family:var(--mono);font-size:11.5px;
   letter-spacing:.04em;line-height:1.6;
 }
 .hero-slide .hero-noimg[hidden]{display:none}
@@ -164,14 +170,14 @@ tr.view-note-row td{
 .hero-dot.on{background:var(--seq-250);transform:scale(1.3)}
 table.cmp{width:100%;border-collapse:collapse;font-size:13.5px;min-width:1180px}
 table.cmp thead th{
-  position:sticky;top:0;background:linear-gradient(180deg,#17181c,var(--ink));color:#fff;z-index:5;
+  position:sticky;top:0;background:linear-gradient(180deg,#2E343C,var(--ink));color:#fff;z-index:5;
   font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;
   text-align:left;padding:11px 12px;white-space:nowrap;border-right:1px solid rgba(255,255,255,.08);
 }
 table.cmp thead th:last-child{border-right:0}
 table.cmp thead th sup{cursor:help;color:rgba(255,255,255,.55)}
 table.cmp thead th.sortable{cursor:pointer;user-select:none}
-table.cmp thead th.sortable:hover{background:#1c1c1c}
+table.cmp thead th.sortable:hover{background:#1B1F25}
 table.cmp thead th.sortable:hover sup{color:rgba(255,255,255,.8)}
 .sort-ind{display:inline-block;width:9px;margin-left:3px;opacity:.4}
 .sort-ind::after{content:'\2195'}
@@ -180,8 +186,8 @@ th.sort-active[data-dir="1"] .sort-ind::after{content:'\2191'}
 th.sort-active[data-dir="-1"] .sort-ind::after{content:'\2193'}
 table.cmp td{padding:12px;border-bottom:1px solid var(--rule-soft);vertical-align:top;color:var(--ink-soft);line-height:1.4}
 table.cmp tbody tr.base-row{background:var(--card)}
-table.cmp tbody tr.base-row:hover{background:#FAFBFC}
-table.cmp tbody tr.trim-row{background:#FAFBFC}
+table.cmp tbody tr.base-row:hover{background:var(--brand-tint)}
+table.cmp tbody tr.trim-row{background:#E4E8EC}
 table.cmp tbody tr.trim-row td{padding-top:9px;padding-bottom:9px}
 table.cmp tbody tr.trim-row[hidden]{display:none}
 .veh-cell{min-width:170px}
@@ -193,7 +199,7 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 }
 .img-preview.show{opacity:1;visibility:visible}
 .img-preview .shot{width:120px}
-.img-preview .img-wrap{width:120px;height:90px;border-radius:4px;overflow:hidden;background:#2a2a28}
+.img-preview .img-wrap{width:120px;height:90px;border-radius:4px;overflow:hidden;background:#2F343C}
 .img-preview .img-wrap img{width:120px;height:90px;object-fit:cover;display:block}
 .img-preview .noimg{width:120px;height:90px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-family:var(--mono);font-size:9px;text-align:center;padding:6px;box-sizing:border-box;line-height:1.3}
 .img-preview .cap{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:5px;text-align:center}
@@ -207,7 +213,7 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 .price-est{font-family:var(--display);font-weight:700;color:var(--ink);font-size:14.5px}
 .score-cell{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .score-track{width:52px;height:6px;background:var(--rule);border-radius:3px;overflow:hidden;flex-shrink:0}
-.score-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--seq-250),var(--s1))}
+.score-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--seq-250),var(--seq-450))}
 .score-num{font-family:var(--mono);font-size:12px;color:var(--ink);width:26px}
 .na{color:var(--ink-faint);font-style:italic}
 .comfort-list{margin:0;padding-left:15px;font-size:13px}
@@ -240,7 +246,7 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 }
 .radar-chip.on{color:#fff}
 .radar-chip[data-slot="0"].on{background:var(--s1);border-color:var(--s1)}
-.radar-chip[data-slot="1"].on{background:var(--s2);border-color:var(--s2)}
+.radar-chip[data-slot="1"].on{background:var(--good);border-color:var(--good)}
 .radar-chip[data-slot="2"].on{background:var(--s3);border-color:var(--s3)}
 .radar-chip .used-badge{font-size:9px;letter-spacing:.04em;opacity:.65;margin-left:4px;text-transform:uppercase}
 .radar-chip.used{border-style:dashed}
@@ -273,7 +279,7 @@ footer{padding:44px 0 70px}
 <header class="masthead">
   <div class="wrap">
     <p class="eyebrow">Buyer's comparison · Crossover EVs · Updated September 2026</p>
-    <h1>Every crossover EV that starts under $45,000, trim by trim.</h1>
+    <h1>Practical Crossover EValuation</h1>
   </div>
 </header>
 
@@ -312,7 +318,7 @@ footer{padding:44px 0 70px}
     <div class="legend-row">
       <span><b>—</b> = not independently confirmed by sourcing (not guessed)</span>
       <span><b>*</b> = modeled estimate, see Methodology</span>
-      <span><b>†</b> = flagged data conflict, see Methodology</span>
+      <span><b style="color:var(--warn)">†</b> = flagged data conflict, see Methodology</span>
       <span><i class="key-swatch"></i> = qualifies on price, but 2025 sales volume was unusually low — expect scarce used inventory</span>
     </div>
     <div class="notes-bar">
@@ -373,7 +379,7 @@ footer{padding:44px 0 70px}
         <div class="chart-wrap" id="costWrap"><svg id="costSvg" viewBox="0 0 520 320"></svg></div>
         <div class="chart-legend">
           <span><i style="background:var(--s1)"></i>Est. insurance</span>
-          <span><i style="background:var(--s2)"></i>Est. maintenance</span>
+          <span><i style="background:var(--s3)"></i>Est. maintenance</span>
         </div>
       </div>
 
@@ -700,7 +706,7 @@ MODELS.forEach(m => m.trims.forEach(t => ALL_TRIMS.push(Object.assign({modelRef:
 
 // Purely decorative per-model accent (row dot in the table) — cycles the three brand
 // accent colors so the table is easier to visually scan; carries no data meaning.
-const MODEL_ACCENTS = ['var(--s1)','var(--s2)','var(--s3)'];
+const MODEL_ACCENTS = ['var(--s1)','var(--good)','var(--s3)'];
 const modelAccentIndex = {};
 MODELS.forEach((m,i)=>{ modelAccentIndex[m.id] = MODEL_ACCENTS[i % MODEL_ACCENTS.length]; });
 function modelAccent(id){ return modelAccentIndex[id] || 'var(--s1)'; }
@@ -768,7 +774,7 @@ function trimRowHTML(m, t, isBase){
     <tr class="${isBase?'base-row':'trim-row'}" data-model="${m.id}" ${isBase?'':'hidden'}>
       <td class="veh-cell">
         ${isBase ? `<div class="veh-name" title="Hover for photos"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>` : ''}
-        <div class="veh-trim">${t.name}${t.priceFlag?' †':''} · ${t.drivetrain} · ${m.year}</div>
+        <div class="veh-trim">${t.name}${t.priceFlag?' <b style="color:var(--warn)">†</b>':''} · ${t.drivetrain} · ${m.year}</div>
         ${isBase && m.trims.length>1 ? `<button class="expand-btn" data-toggle="${m.id}">+${m.trims.length-1} more trim${m.trims.length>2?'s':''}</button>`:''}
       </td>
       <td class="num"><span class="price-est">${fmtUSD(va)}</span></td>
@@ -944,7 +950,7 @@ function hex2rgb(h){
 }
 function seqColor(t01){
   // interpolate light blue -> dark blue across 4 stops
-  const stops = ['#cde2fb','#86b6ef','#2a78d6','#184f95'];
+  const stops = ['#D6F0EE','#7FCFC9','#16A6A1','#0B6B67'];
   const seg = Math.min(2, Math.floor(t01*3));
   const localT = t01*3 - seg;
   const [r1,g1,b1] = hex2rgb(stops[seg]), [r2,g2,b2] = hex2rgb(stops[seg+1]);
@@ -976,7 +982,7 @@ const BASE = MODELS.map(m => Object.assign({modelRef:m}, [...m.trims].sort((a,b)
   });
   placed.forEach(({t,cx,cy,labelY})=>{
     const eff = efficiencyScore(t);
-    const col = eff!=null ? seqColor(normalize(eff,1,10)) : '#c3c2b7';
+    const col = eff!=null ? seqColor(normalize(eff,1,10)) : '#B7BEC7';
     s += `<circle cx="${cx}" cy="${cy}" r="7" fill="${col}" stroke="#fff" stroke-width="1.5" class="pt" data-i="${t.modelRef.id}" style="cursor:pointer"/>`;
     if(Math.abs(labelY-(cy+4))>1){ s += `<line x1="${cx+6}" y1="${cy}" x2="${cx+9}" y2="${labelY-4}" stroke="var(--ink-faint)" stroke-width="1"/>`; }
     s += `<text class="pt-label" x="${cx+10}" y="${labelY}">${t.modelRef.model}</text>`;
@@ -1000,7 +1006,7 @@ const RADAR_CANDIDATES = [
   }),
 ];
 const radarSelected = [];
-const radarColors = ['var(--s1)','var(--s2)','var(--s3)'];
+const radarColors = ['var(--s1)','var(--good)','var(--s3)'];
 function radarAxes(t){
   const pool = RADAR_CANDIDATES.map(c=>c.t);
   const eff = efficiencyScore(t) ?? 1;
@@ -1111,7 +1117,7 @@ drawRadarPicker();
     const insW = x(d.up.insurance);
     const mainW = x(d.up.maintenance);
     s += `<rect x="${ML}" y="${cy-bh/2}" width="${insW}" height="${bh}" fill="var(--s1)"/>`;
-    s += `<rect x="${ML+insW+2}" y="${cy-bh/2}" width="${mainW}" height="${bh}" fill="var(--s2)"/>`;
+    s += `<rect x="${ML+insW+2}" y="${cy-bh/2}" width="${mainW}" height="${bh}" fill="var(--s3)"/>`;
     s += `<text class="bar-val" x="${ML+insW+mainW+10}" y="${cy+4}">${fmtUSD(d.up.total)}</text>`;
   });
   svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
