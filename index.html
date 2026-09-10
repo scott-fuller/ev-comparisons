@@ -78,11 +78,16 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,3vw,32px);let
 .callout p+p{margin-top:8px}
 
 /* ---------- table ---------- */
-.tabs{display:flex;gap:8px;margin:0 0 22px}
-.tab-btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:8px 16px;border-radius:20px;border:1px solid var(--rule);background:var(--card);color:var(--ink-soft);cursor:pointer}
-.tab-btn:hover{border-color:var(--ink-faint)}
-.tab-btn.active{background:var(--ink);border-color:var(--ink);color:#fff}
-.legend-row{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin-bottom:16px;align-items:center}
+.tabs{display:flex;gap:4px;margin:0;position:relative;z-index:2;padding-left:2px}
+.tab-btn{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;padding:10px 20px 11px;
+  border-radius:8px 8px 0 0;border:1px solid var(--rule);border-bottom:none;
+  background:var(--rule-soft);color:var(--ink-faint);cursor:pointer;position:relative;top:1px;
+  transition:background .15s ease,color .15s ease,top .15s ease;
+}
+.tab-btn:hover{color:var(--ink-soft)}
+.tab-btn.active{background:var(--ink);border-color:var(--ink);color:#fff;top:0;z-index:1}
+.legend-row{display:flex;flex-wrap:wrap;gap:16px;font-family:var(--mono);font-size:11px;color:var(--ink-faint);margin:18px 0 16px;align-items:center}
 .legend-row b{color:var(--ink-soft);font-weight:600}
 .key-swatch{display:inline-block;width:11px;height:11px;border-radius:2px;background:#FDECC8;border:1px solid #E8B84B;vertical-align:-1px;margin-right:2px}
 tr.low-avail{background:#FFFAF0}
@@ -117,7 +122,11 @@ tr.low-avail:hover{background:#FFF4DE}
 tr.is-eliminated{opacity:.5}
 tr.is-eliminated .veh-name{text-decoration:line-through}
 tr.is-eliminated[hidden]{display:none}
-.table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;background:var(--card);box-shadow:0 1px 2px rgba(11,11,11,.04)}
+.table-scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:0 4px 4px 4px;background:var(--card);box-shadow:0 1px 2px rgba(11,11,11,.04);position:relative;z-index:1}
+tr.view-note-row td{
+  background:#F5F4EF;color:var(--ink-soft);font-size:13.5px;line-height:1.6;padding:14px 16px;
+  border-bottom:2px solid var(--rule);white-space:normal;
+}
 
 /* ---------- hero slideshow ---------- */
 .hero-slideshow{
@@ -278,19 +287,6 @@ footer{padding:44px 0 70px}
       <button class="tab-btn" data-view="used" role="tab" aria-selected="false">Used &rsquo;25 &middot; under 10k mi</button>
     </div>
 
-    <p class="sec-sub" data-view-note="new">Each model opens on its cheapest qualifying trim. Expand a row to see every trim under $45,000 for that model. Ratings are on a 1–10 scale built from published specs — the exact formula is in Methodology, not a third-party score.</p>
-    <p class="sec-sub" data-view-note="used" hidden>One row per model — the closest 2025-model-year, sub-10,000-mile used example, priced with the same Virginia sales-tax methodology as the new-car tab. Two 2026 models have no qualifying 2025 predecessor and aren't shown here; see the note below the table. Rows highlighted amber technically qualify on price but had exceptionally low 2025 U.S. sales, so expect thin real-world used inventory.</p>
-
-    <div class="legend-row">
-      <span><b>—</b> = not independently confirmed by sourcing (not guessed)</span>
-      <span><b>*</b> = modeled estimate, see Methodology</span>
-      <span><b>†</b> = flagged data conflict, see Methodology</span>
-      <span><i class="key-swatch"></i> = qualifies on price, but 2025 sales volume was unusually low — expect scarce used inventory</span>
-    </div>
-    <div class="notes-bar">
-      <span class="notes-bar-txt">"Our notes" is a shared, editable layer — anyone with this page's link can rate, annotate, or eliminate a model, and everyone sees the same updates. It's opinion, not research; every other column above stays sourced and fixed.</span>
-      <label class="show-elim"><input type="checkbox" id="showEliminated"> Show eliminated (<span id="elimCount">0</span>)</label>
-    </div>
     <div class="table-scroll">
       <table class="cmp">
         <thead>
@@ -308,9 +304,20 @@ footer{padding:44px 0 70px}
             <th>Our notes <span id="overlayStatus" class="overlay-status" title="Loading…">&#9679;</span></th>
           </tr>
         </thead>
-        <tbody id="tbody"></tbody>
+        <tbody id="tbody"><tr class="view-note-row"><td colspan="11">Each model opens on its cheapest qualifying trim. Expand a row to see every trim under $45,000 for that model. Ratings are on a 1–10 scale built from published specs — the exact formula is in Methodology, not a third-party score.</td></tr></tbody>
         <tbody id="tbodyUsed" hidden></tbody>
       </table>
+    </div>
+
+    <div class="legend-row">
+      <span><b>—</b> = not independently confirmed by sourcing (not guessed)</span>
+      <span><b>*</b> = modeled estimate, see Methodology</span>
+      <span><b>†</b> = flagged data conflict, see Methodology</span>
+      <span><i class="key-swatch"></i> = qualifies on price, but 2025 sales volume was unusually low — expect scarce used inventory</span>
+    </div>
+    <div class="notes-bar">
+      <span class="notes-bar-txt">"Our notes" is a shared, editable layer — anyone with this page's link can rate, annotate, or eliminate a model, and everyone sees the same updates. It's opinion, not research; every other column above stays sourced and fixed.</span>
+      <label class="show-elim"><input type="checkbox" id="showEliminated"> Show eliminated (<span id="elimCount">0</span>)</label>
     </div>
     <div class="callout warn" id="usedExcludedNote" style="margin-top:18px" hidden>
       <h3>Not shown on this tab</h3>
@@ -840,7 +847,8 @@ function usedRowHTML(row){
     </tr>`;
 }
 const tbodyUsed = document.getElementById('tbodyUsed');
-tbodyUsed.innerHTML = USED_ROWS.map(usedRowHTML).join('');
+const usedNoteRowHTML = `<tr class="view-note-row"><td colspan="11">One row per model — the closest 2025-model-year, sub-10,000-mile used example, priced with the same Virginia sales-tax methodology as the new-car tab. Two 2026 models have no qualifying 2025 predecessor and aren't shown here; see the note below the table. Rows highlighted amber technically qualify on price but had exceptionally low 2025 U.S. sales, so expect thin real-world used inventory.</td></tr>`;
+tbodyUsed.innerHTML = usedNoteRowHTML + USED_ROWS.map(usedRowHTML).join('');
 
 function sortValueUsed(row, key){
   const t = usedRowTrim(row);
@@ -867,7 +875,6 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     if(view===currentView) return;
     currentView = view;
     document.querySelectorAll('.tab-btn').forEach(b=>{ b.classList.toggle('active', b===btn); b.setAttribute('aria-selected', String(b===btn)); });
-    document.querySelectorAll('[data-view-note]').forEach(p=> p.hidden = p.dataset.viewNote !== view);
     tbody.hidden = view !== 'new';
     tbodyUsed.hidden = view !== 'used';
     document.getElementById('usedExcludedNote').hidden = view !== 'used';
