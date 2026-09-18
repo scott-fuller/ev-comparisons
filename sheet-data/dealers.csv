@@ -1,0 +1,21 @@
+brand,dealerName,address,phone,rank,distanceNote,specialNote,inventoryUrl
+Kia,Ourisman Kia of Alexandria,"8670 Richmond Hwy, Alexandria, VA 22309",(571) 775-8600,1,~8 mi,,https://www.kia.com/us/en/inventory/landing
+Kia,Ourisman Kia of Fairfax,"10601 Fairfax Blvd, Fairfax, VA 22030",(703) 934-8877,2,~9 mi,,https://www.kia.com/us/en/inventory/landing
+Toyota,Priority Toyota Springfield,"7601 Loisdale Rd, Springfield, VA 22150",(703) 269-1400,1,~2 mi,,https://www.toyota.com/search-inventory/
+Toyota,Alexandria Toyota,"3750 Richmond Hwy, Alexandria, VA 22305",(571) 670-6419,2,~9 mi,,https://www.toyota.com/search-inventory/
+Subaru,Sheehy Subaru of Springfield,"7501 Loisdale Rd, Springfield, VA 22150",(703) 594-8718,1,~2 mi,,https://www.subaru.com/vehicles/local-inventory.html
+Subaru,Farrish Subaru,"10407 Fairfax Blvd, Fairfax, VA 22030",(703) 352-4006,2,~8 mi,,https://www.subaru.com/vehicles/local-inventory.html
+Hyundai,Safford Hyundai of Springfield,"7615 Loisdale Rd Unit A, Springfield, VA 22150",(703) 776-9040,1,~2 mi,,https://www.hyundaiusa.com/us/en/inventory-search/vehicles-list
+Hyundai,Alexandria Hyundai,"1707 Mount Vernon Ave, Alexandria, VA 22301",(703) 535-6840,2,~9 mi,,https://www.hyundaiusa.com/us/en/inventory-search/vehicles-list
+Volvo,Lindsay Volvo Cars of Alexandria,"1700 Kenwood Ave, Alexandria, VA 22302",(571) 487-8952,1,~9 mi,,https://www.volvocars.com/us/inventory/
+Volvo,DARCARS Volvo Cars Fairfax,"11050 Fairfax Blvd, Fairfax, VA 22030",(703) 591-1820,2,~9-10 mi,,https://www.volvocars.com/us/inventory/
+Ford,Sheehy Ford of Springfield,"6727 Loisdale Rd, Springfield, VA 22150",(703) 651-1549,1,~2 mi,,https://shop.ford.com/showroom/
+Ford,Malloy Ford of Alexandria,"6510 Little River Tpke, Alexandria, VA 22312",(703) 256-5000,2,~5 mi,"Ford has no unified zip-code inventory search like the other brands — the linked page is an all-vehicle showroom browser, not a per-dealer search.",https://shop.ford.com/showroom/
+Tesla,Tesla Tysons Corner (Store + Service Center),"8500 Tyco Rd, Vienna, VA 22182",(703) 761-4679,1,~16 mi,"Tesla doesn't franchise — book your test drive at tesla.com/drive or the Tesla app, not by phone. This is the reliable full store+service location.",https://www.tesla.com/inventory/new/my
+Tesla,Tesla Gallery — Springfield Town Center,"6500 Springfield Mall, Springfield, VA 22150",(571) 645-7019,2,~3 mi,Mall gallery — may only have display units. Not confirmed to offer test drives; call ahead or check tesla.com/drive before counting on this location.,https://www.tesla.com/inventory/new/my
+Nissan,Hart Nissan of Nova,"6570 Amherst Ave, Springfield, VA 22150",(571) 423-0568,1,~2-3 mi,,https://www.nissanusa.com/shopping-tools/search-inventory
+Nissan,Passport Nissan of Alexandria,"150 S Pickett St, Alexandria, VA 22304",(703) 823-9000,2,~8 mi,,https://www.nissanusa.com/shopping-tools/search-inventory
+VinFast,Ourisman VinFast Waldorf,"2282 Crain Hwy Ste B, Waldorf, MD 20601",(301) 381-1223,1,~35 mi,No VinFast dealer exists in Virginia — this Maryland location is the closest. Call ahead given the drive.,
+VinFast,Ourisman VinFast of Frederick,"6001 Urbana Pike Suite B, Frederick, MD 21704",(301) 301-5901,2,~55 mi,A stale online listing suggests this address may have previously housed a different dealer — call ahead to confirm before the drive.,
+Chevrolet,Malloy Chevrolet of Alexandria,"6508 Little River Tpke, Alexandria, VA 22312",(703) 256-5000,1,~5 mi,,https://www.chevrolet.com/shopping/inventory/search
+Chevrolet,Ourisman Chevrolet Buick GMC of Alexandria,"1800 Old Richmond Hwy, Alexandria, VA 22303",(703) 835-9910,2,~9 mi,,https://www.chevrolet.com/shopping/inventory/search

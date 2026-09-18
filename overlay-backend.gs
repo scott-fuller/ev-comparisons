@@ -1,10 +1,11 @@
 /**
  * Backend for the EV comparison page (ev-comparisons repo): serves the
- * editable primary table data (Trims + Used tabs) AND the shared "our
- * notes" overlay (Overlay tab) from one Google Sheet + one Apps Script
+ * editable primary table data (Trims + Used tabs), the dealer/test-drive
+ * planning data (Dealers tab), AND the shared "our notes" + test-drive
+ * status overlay (Overlay tab) from one Google Sheet + one Apps Script
  * web app deployment.
  *
- * Deploy this bound to a Google Sheet with three tabs:
+ * Deploy this bound to a Google Sheet with four tabs:
  *
  * 1. "Trims" — one row per trim. Header row (row 1, columns A-Q, exact spelling):
  *    modelId | make | model | year | warrantyBasic | warrantyBattery | trimName |
@@ -29,24 +30,49 @@
  *    - lowAvail: TRUE/FALSE. sales2025 / availNote / trimNameOverride may be
  *      left blank.
  *
- * 3. "Overlay" — unchanged from before: key | eliminated | rating | note | updatedAt
- *    (the page manages this tab entirely itself via star ratings / notes /
- *    eliminate buttons — you don't need to type into it).
+ * 3. "Dealers" — one row per dealership, for the "Plan your test drives"
+ *    section. Header row (columns A-H):
+ *    brand | dealerName | address | phone | rank | distanceNote | specialNote | inventoryUrl
  *
- * If the Trims or Used tabs are empty (or unreachable), the live page falls
- * back to its own built-in seed data automatically — editing the Sheet is
- * optional, not required for the page to work.
+ *    - brand must exactly match a "make" value used in the Trims tab
+ *      (e.g. "Kia", "Toyota", "Subaru", "Hyundai", "Volvo", "Ford", "Tesla",
+ *      "Nissan", "VinFast", "Chevrolet") — one dealer serves every model
+ *      under that brand, so this is brand-level, not per-model.
+ *    - rank: 1 = closest, 2 = second-closest. You can add more than 2 rows
+ *      per brand (e.g. a 3rd option) — the page just shows all rows for
+ *      the selected brand, sorted by rank.
+ *    - phone / distanceNote / specialNote may be left blank. specialNote is
+ *      for caveats like "Book via the Tesla app, not a phone call" or
+ *      "Nearest of only a few US locations — call ahead to confirm stock."
+ *    - inventoryUrl: that brand's own official live-inventory-search page
+ *      (same value repeated on every row for that brand, same repetition
+ *      pattern as make/model/year on the Trims tab). Leave blank if the
+ *      brand has no public inventory search.
+ *
+ * 4. "Overlay" — the page manages this tab entirely itself; you don't need
+ *    to type into it. Header row (columns A-G):
+ *    key | eliminated | rating | note | status | scheduledDate | updatedAt
+ *
+ *    Two different kinds of rows share this tab by key prefix:
+ *    - "new:<modelId>" / "used:<modelId>" — star rating, note, eliminated
+ *      flag from the main table's "Our notes" column (eliminated/rating/note).
+ *    - "td:<modelId>" — test-drive status from the "Plan your test drives"
+ *      section (status/scheduledDate/note). status is one of "none",
+ *      "scheduled", "driven".
+ *
+ * If the Trims, Used, or Dealers tabs are empty (or unreachable), the live
+ * page falls back to its own built-in seed data automatically — editing the
+ * Sheet is optional, not required for the page to work.
  *
  * Setup (one-time, in your own Google account):
  * 1. Create a new Google Sheet (or reuse the one already backing "our notes").
- * 2. Add tabs named exactly "Trims", "Used", and "Overlay" (case-sensitive).
- *    Missing tabs are auto-created with the correct header row the first
- *    time this script's web app receives a GET request, but the sheet
- *    itself must already exist for that to happen — visiting the /exec URL
- *    once after deploying is enough to trigger it.
- * 3. Paste your trim/used data below each header row (see the repo's
- *    sheet-data/trims.csv and sheet-data/used.csv for the current page
- *    data, ready to paste in).
+ * 2. Add tabs named exactly "Trims", "Used", "Dealers", and "Overlay"
+ *    (case-sensitive). Missing tabs are auto-created with the correct header
+ *    row the first time this script's web app receives a GET request, but
+ *    the sheet itself must already exist for that to happen — visiting the
+ *    /exec URL once after deploying is enough to trigger it.
+ * 3. Paste your data below each header row (see the repo's sheet-data/*.csv
+ *    files for the current page data, ready to paste in).
  * 4. Extensions -> Apps Script. Delete the placeholder code and paste this
  *    whole file in.
  * 5. Deploy -> New deployment -> type "Web app".
@@ -63,12 +89,12 @@
  * -> pencil icon -> New version -> Deploy. Editing the script without
  * creating a new version will NOT update the live /exec URL.
  *
- * Editing the Trims/Used tab contents (prices, specs, etc.) does NOT need
- * a redeploy — that data is read live on every page load.
+ * Editing the Trims/Used/Dealers tab contents (prices, specs, dealer info,
+ * etc.) does NOT need a redeploy — that data is read live on every page load.
  */
 
 const OVERLAY_SHEET = 'Overlay';
-const OVERLAY_HEADERS = ['key', 'eliminated', 'rating', 'note', 'updatedAt'];
+const OVERLAY_HEADERS = ['key', 'eliminated', 'rating', 'note', 'status', 'scheduledDate', 'updatedAt'];
 
 const TRIMS_SHEET = 'Trims';
 const TRIMS_HEADERS = ['modelId', 'make', 'model', 'year', 'warrantyBasic', 'warrantyBattery',
@@ -77,6 +103,9 @@ const TRIMS_HEADERS = ['modelId', 'make', 'model', 'year', 'warrantyBasic', 'war
 
 const USED_SHEET = 'Used';
 const USED_HEADERS = ['modelId', 'usedPrice', 'sales2025', 'lowAvail', 'availNote', 'trimNameOverride'];
+
+const DEALERS_SHEET = 'Dealers';
+const DEALERS_HEADERS = ['brand', 'dealerName', 'address', 'phone', 'rank', 'distanceNote', 'specialNote', 'inventoryUrl'];
 
 function getOrCreateSheet_(name, headers) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -112,11 +141,13 @@ function doGet(e) {
   const rows = readRows_(OVERLAY_SHEET, OVERLAY_HEADERS);
   const trims = readRows_(TRIMS_SHEET, TRIMS_HEADERS);
   const used = readRows_(USED_SHEET, USED_HEADERS);
-  return json_({ ok: true, rows, trims, used });
+  const dealers = readRows_(DEALERS_SHEET, DEALERS_HEADERS);
+  return json_({ ok: true, rows, trims, used, dealers });
 }
 
-// POST only ever writes to the Overlay tab (star ratings, notes, eliminations
-// from the page). Trims/Used are edited directly in the Sheet by hand.
+// POST only ever writes to the Overlay tab (star ratings/notes/eliminations
+// from the main table, and test-drive status from the planning section).
+// Trims/Used/Dealers are edited directly in the Sheet by hand.
 function doPost(e) {
   let payload;
   try {
