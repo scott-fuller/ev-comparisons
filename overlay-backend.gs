@@ -7,15 +7,18 @@
  *
  * Deploy this bound to a Google Sheet with four tabs:
  *
- * 1. "Trims" — one row per trim. Header row (row 1, columns A-Q, exact spelling):
+ * 1. "Trims" — one row per trim. Header row (row 1, columns A-S, exact spelling):
  *    modelId | make | model | year | warrantyBasic | warrantyBattery | trimName |
  *    msrp | drivetrain | range | mpge | batteryKwh | dcfcKw | zeroToSixty |
- *    cargo | comfort | priceFlag
+ *    cargo | length | wheelbase | comfort | priceFlag
  *
  *    - Group all trims for the same model on consecutive rows (same modelId) —
- *      the first row for a modelId supplies make/model/year/warranty for the
- *      whole model, so only its first trim row strictly needs those filled in
- *      (later rows for the same modelId may repeat them or leave them blank).
+ *      the first row for a modelId supplies make/model/year/warranty/length/
+ *      wheelbase for the whole model, so only its first trim row strictly
+ *      needs those filled in (later rows for the same modelId may repeat
+ *      them or leave them blank).
+ *    - length / wheelbase: inches, model-generation-level (not per-trim —
+ *      these don't vary by trim the way range or MPGe do).
  *    - Leave a cell blank for "not confirmed" (shows as "—" on the page,
  *      matching this page's own sourcing convention — never guess a value).
  *    - comfort: multiple short feature notes separated by " | " (pipe),
@@ -99,7 +102,7 @@ const OVERLAY_HEADERS = ['key', 'eliminated', 'rating', 'note', 'status', 'sched
 const TRIMS_SHEET = 'Trims';
 const TRIMS_HEADERS = ['modelId', 'make', 'model', 'year', 'warrantyBasic', 'warrantyBattery',
   'trimName', 'msrp', 'drivetrain', 'range', 'mpge', 'batteryKwh', 'dcfcKw', 'zeroToSixty',
-  'cargo', 'comfort', 'priceFlag'];
+  'cargo', 'length', 'wheelbase', 'comfort', 'priceFlag'];
 
 const USED_SHEET = 'Used';
 const USED_HEADERS = ['modelId', 'usedPrice', 'sales2025', 'lowAvail', 'availNote', 'trimNameOverride'];

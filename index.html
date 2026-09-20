@@ -355,11 +355,11 @@ footer{padding:44px 0 70px}
             <th class="sortable" data-sort="name" data-dir="1">Make &amp; model<span class="sort-ind"></span></th>
             <th class="sortable" data-sort="price" data-dir="1"><span id="priceColLabel">Est. VA price</span> <sup id="priceColSup" title="MSRP + 4.15% VA sales tax. Not real transaction data.">*</sup><span class="sort-ind"></span></th>
             <th class="sortable" data-sort="efficiency" data-dir="-1">Efficiency <sup title="1–10, built from EPA MPGe (or range÷battery where MPGe is unpublished). See Methodology.">*</sup><span class="sort-ind"></span></th>
-            <th class="sortable" data-sort="charging" data-dir="-1">Charging &amp; battery <sup title="1–10, combines DC fast-charge rate and battery capacity. See Methodology.">*</sup><span class="sort-ind"></span></th>
             <th>Factory warranty</th>
             <th class="sortable" data-sort="cargo" data-dir="-1">Cargo (cu ft)<span class="sort-ind"></span></th>
+            <th class="sortable" data-sort="length" data-dir="-1">Length (in)<span class="sort-ind"></span></th>
+            <th class="sortable" data-sort="wheelbase" data-dir="-1">Wheelbase (in)<span class="sort-ind"></span></th>
             <th class="sortable" data-sort="a30" data-dir="1">0–30 mph <sup title="Estimated from published 0–60 time using a standard EV acceleration curve — not independently tested.">*</sup><span class="sort-ind"></span></th>
-            <th class="sortable" data-sort="a45" data-dir="1">0–45 mph <sup title="Estimated from published 0–60 time using a standard EV acceleration curve — not independently tested.">*</sup><span class="sort-ind"></span></th>
             <th>Front seat comfort</th>
             <th class="sortable" data-sort="upkeep" data-dir="1">Est. 5-yr upkeep <sup title="Modeled: insurance scaled to price + per-mile maintenance × 12,000 mi/yr × 5. See Methodology.">*</sup><span class="sort-ind"></span></th>
             <th>Our notes <span id="overlayStatus" class="overlay-status" title="Loading…">&#9679;</span></th>
@@ -487,7 +487,7 @@ footer{padding:44px 0 70px}
       <dd>Built from EPA combined MPGe. Where MPGe wasn't published for a trim, an equivalent is derived as (EPA range ÷ battery kWh) × 33.7. Every trim's effective MPGe is then min–max normalized across all 24 trims to a 1–10 scale. A trim with neither MPGe nor both range and battery kWh confirmed shows "—".</dd>
 
       <dt>Charging &amp; battery score (1–10)</dt>
-      <dd>A weighted blend of two normalized (min–max, 1–10) components across all 24 trims: 60% peak DC fast-charge rate (kW) and 40% battery capacity (kWh, as reported — gross for some models, usable for others, since manufacturers don't disclose consistently). If only one component is confirmed for a trim, that component is used at full weight; if neither is confirmed, the cell shows "—".</dd>
+      <dd>A weighted blend of two normalized (min–max, 1–10) components across all 24 trims: 60% peak DC fast-charge rate (kW) and 40% battery capacity (kWh, as reported — gross for some models, usable for others, since manufacturers don't disclose consistently). If only one component is confirmed for a trim, that component is used at full weight. This score no longer has its own table column — it now feeds only the "Charging" axis of the "Model shape comparison" radar chart, where an unconfirmed trim is scored at the scale's floor (1) rather than shown as "—".</dd>
 
       <dt>0–30 / 0–45 mph estimates</dt>
       <dd>Derived from each trim's published (or closely attributed) 0–60 mph time using ratios drawn from instrumented EV tests: 0–30 ≈ 38% of the 0–60 time; 0–45 ≈ 65% of the 0–60 time. This reflects the fact that most EVs post their fastest acceleration low in the range and taper as power limits kick in near highway speed — it is a modeled estimate, not a test result, and trims with no confirmed 0–60 show "—" for both.</dd>
@@ -760,6 +760,7 @@ function groupTrimRows_(trimRows){
       byModel[id] = {
         id, make: r.make || '', model: r.model || '', year: numOrNull_(r.year) || new Date().getFullYear(),
         warranty: { basic: r.warrantyBasic || '', battery: r.warrantyBattery || '' },
+        length: numOrNull_(r.length), wheelbase: numOrNull_(r.wheelbase),
         trims: [],
       };
       order.push(id);
@@ -890,9 +891,9 @@ function notesCellHTML(key){
   </td>`;
 }
 function trimRowHTML(m, t, isBase){
-  const eff = efficiencyScore(t), rech = rechargeScore(t);
+  const eff = efficiencyScore(t);
   const va = vaPrice(t), up = upkeep5yr(t);
-  const a30 = est030(t), a45 = est045(t);
+  const a30 = est030(t);
   return `
     <tr class="${isBase?'base-row':'trim-row'}" data-model="${m.id}" ${isBase?'':'hidden'}>
       <td class="veh-cell">
@@ -902,11 +903,11 @@ function trimRowHTML(m, t, isBase){
       </td>
       <td class="num"><span class="price-est">${fmtUSD(va)}</span></td>
       <td>${scoreCell(eff)}</td>
-      <td>${scoreCell(rech)}</td>
       <td class="warranty-txt">${m.warranty.basic} basic<br>${m.warranty.battery}</td>
       <td class="num">${t.cargo!=null?t.cargo:'<span class="na">—</span>'}</td>
+      <td class="num">${m.length!=null?m.length:'<span class="na">—</span>'}</td>
+      <td class="num">${m.wheelbase!=null?m.wheelbase:'<span class="na">—</span>'}</td>
       <td class="num">${a30!=null?a30+'s':'<span class="na">—</span>'}</td>
-      <td class="num">${a45!=null?a45+'s':'<span class="na">—</span>'}</td>
       <td><ul class="comfort-list">${t.comfort.map(c=>`<li>${c}</li>`).join('')}</ul></td>
       <td class="num">${fmtUSD(up.total)}</td>
       ${isBase ? notesCellHTML('new:'+m.id) : '<td class="notes-cell-empty"></td>'}
@@ -933,10 +934,10 @@ function sortValue(m, key){
     case 'name': return (m.make+' '+m.model).toLowerCase();
     case 'price': return vaPrice(t);
     case 'efficiency': return efficiencyScore(t);
-    case 'charging': return rechargeScore(t);
     case 'cargo': return t.cargo;
+    case 'length': return m.length;
+    case 'wheelbase': return m.wheelbase;
     case 'a30': return est030(t);
-    case 'a45': return est045(t);
     case 'upkeep': return upkeep5yr(t).total;
     default: return null;
   }
@@ -953,9 +954,9 @@ function usedRowTrim(row){
 function usedRowHTML(row){
   const t = usedRowTrim(row);
   const m = t.modelRef;
-  const eff = efficiencyScore(t), rech = rechargeScore(t);
+  const eff = efficiencyScore(t);
   const va = vaPrice(t), up = upkeep5yr(t);
-  const a30 = est030(t), a45 = est045(t);
+  const a30 = est030(t);
   return `
     <tr class="base-row${row.lowAvail?' low-avail':''}" data-used-model="${row.modelId}">
       <td class="veh-cell">
@@ -965,11 +966,11 @@ function usedRowHTML(row){
       </td>
       <td class="num"><span class="price-est">${fmtUSD(va)}</span></td>
       <td>${scoreCell(eff)}</td>
-      <td>${scoreCell(rech)}</td>
       <td class="warranty-txt">${m.warranty.basic} basic<br>${m.warranty.battery}</td>
       <td class="num">${t.cargo!=null?t.cargo:'<span class="na">—</span>'}</td>
+      <td class="num">${m.length!=null?m.length:'<span class="na">—</span>'}</td>
+      <td class="num">${m.wheelbase!=null?m.wheelbase:'<span class="na">—</span>'}</td>
       <td class="num">${a30!=null?a30+'s':'<span class="na">—</span>'}</td>
-      <td class="num">${a45!=null?a45+'s':'<span class="na">—</span>'}</td>
       <td><ul class="comfort-list">${t.comfort.map(c=>`<li>${c}</li>`).join('')}</ul></td>
       <td class="num">${fmtUSD(up.total)}</td>
       ${notesCellHTML('used:'+row.modelId)}
@@ -985,10 +986,10 @@ function sortValueUsed(row, key){
     case 'name': return (t.modelRef.make+' '+t.modelRef.model).toLowerCase();
     case 'price': return vaPrice(t);
     case 'efficiency': return efficiencyScore(t);
-    case 'charging': return rechargeScore(t);
     case 'cargo': return t.cargo;
+    case 'length': return t.modelRef.length;
+    case 'wheelbase': return t.modelRef.wheelbase;
     case 'a30': return est030(t);
-    case 'a45': return est045(t);
     case 'upkeep': return upkeep5yr(t).total;
     default: return null;
   }
