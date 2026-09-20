@@ -536,7 +536,9 @@ footer{padding:44px 0 70px}
       <li>Volvo EX30: 10–80% charge time; Plus Dual Motor exact price (option-delta estimate only, so that trim is omitted entirely)</li>
       <li>Ford Mustang Mach-E: genuine per-trim MPGe and per-trim 0–60 (a second pass turned up only a suspiciously fast 5.6s figure for Select RWD that couldn't be corroborated, so it was not used); AWD-specific range for Select AWD</li>
       <li>Tesla Model Y: exact battery kWh and MPGe for either trim; exact 10–80% charge time; whether comfort features differ Standard vs. Premium for MY2026 (Standard AWD's range and 0–60 were resolved — see September 9 update note)</li>
-      <li>Nissan Leaf: 0–60 time is one figure reported for the lineup, not confirmed trim-by-trim (heavier wheels on higher trims could plausibly slow it slightly)</li>
+      <li>Nissan Leaf: 0–60 time is one figure reported for the lineup, not confirmed trim-by-trim (heavier wheels on higher trims could plausibly slow it slightly); length and wheelbase also unconfirmed — US-market sources converge on 173.4 in / 105.9 in, but other-market listings report meaningfully different figures and Nissan's own US spec pages weren't reachable to settle it, so both show "—" rather than picked from the converging-but-unverified figure</li>
+      <li>Kia EV6 Light / Light Long Range: length reported as a narrow 184.3–184.8 in range across sources depending on trim/wheel package; 184.8 in used here, not confirmed as Light-specific</li>
+      <li>Subaru Uncharted: length reported as a narrow 177.8–178.0 in range across sources; 177.9 in used here</li>
       <li>VinFast VF8 Eco: whether 87.7 kWh is usable or gross battery capacity; 0–60 time varies 5.8–6.0s across sources (5.9s used here)</li>
       <li>Subaru Uncharted Premium (FWD): 0–60 time (one source gives only "just over 7 seconds," not a specific figure)</li>
       <li>Used '25 tab — Kia Niro EV: exact 2025 EV-only US sales volume (Kia's reporting combines it with Niro hybrid/PHEV)</li>
@@ -591,6 +593,15 @@ footer{padding:44px 0 70px}
       <li>CarsDirect — <a href="https://www.carsdirect.com/vinfast/vf-8/2025" target="_blank" rel="noopener">VF8 EPA MPGe rating</a></li>
       <li>TSLAblog — <a href="https://tslablog.com/vehicles/2026-model-y-juniper-standard-awd/" target="_blank" rel="noopener">Model Y Standard AWD range &amp; 0–60</a></li>
       <li>Forbes — <a href="https://www.forbes.com/sites/brookecrothers/2026/02/11/new-cheaper-tesla-model-y-awd-10-features-youll-lose/" target="_blank" rel="noopener">Model Y Standard AWD spec cross-check</a></li>
+      <li>Length &amp; wheelbase — Kia — <a href="https://www.kia.com/us/en/niro-ev/specs" target="_blank" rel="noopener">Niro EV specs</a>, <a href="https://www.kiamedia.com/us/en/models/ev6/2026/specifications" target="_blank" rel="noopener">EV6 specs</a></li>
+      <li>Length &amp; wheelbase — Toyota Newsroom — <a href="https://pressroom.toyota.com/vehicle/2026-toyota-bz/" target="_blank" rel="noopener">bZ dimensions</a></li>
+      <li>Length &amp; wheelbase — Subaru Newsroom — <a href="https://media.subaru.com/pressrelease/2307/all-new-2026-subaru-solterra-ev-debuts-updated" target="_blank" rel="noopener">Solterra dimensions</a>; CarsGuide — <a href="https://www.carsguide.com.au/subaru/uncharted/car-dimensions/2026" target="_blank" rel="noopener">Uncharted dimensions</a></li>
+      <li>Length &amp; wheelbase — CarsGuide — <a href="https://www.carsguide.com.au/hyundai/ioniq-5/car-dimensions/2026" target="_blank" rel="noopener">Ioniq 5 dimensions</a></li>
+      <li>Length &amp; wheelbase — Volvo Cars — <a href="https://www.volvocars.com/us/cars/ex30-electric/specifications/" target="_blank" rel="noopener">EX30 dimensions</a></li>
+      <li>Length &amp; wheelbase — KBB — <a href="https://www.kbb.com/ford/mustang-mach-e/2026/specs/" target="_blank" rel="noopener">Mustang Mach-E dimensions by trim</a></li>
+      <li>Length &amp; wheelbase — TSLAblog — <a href="https://tslablog.com/vehicles/2026-model-y-juniper-standard-rwd/" target="_blank" rel="noopener">Model Y Standard dimensions</a></li>
+      <li>Length &amp; wheelbase — VinFast — <a href="https://vinfastauto.com" target="_blank" rel="noopener">VF8 official specs</a></li>
+      <li>Length &amp; wheelbase — The Car Connection — <a href="https://www.thecarconnection.com/specifications/chevrolet_equinox-ev_2026" target="_blank" rel="noopener">Equinox EV dimensions</a></li>
     </ul>
   </div>
 </section>
@@ -617,44 +628,44 @@ footer{padding:44px 0 70px}
 */
 const SEED_MODELS = [
   { id:'niro', make:'Kia', model:'Niro EV', year:2026,
-    warranty:{basic:'5/60', battery:'10/100 (inferred from Kia’s general EV policy — not model-specific)'},
+    warranty:{basic:'5/60', battery:'10/100 (inferred from Kia’s general EV policy — not model-specific)'}, length:174, wheelbase:107,
     trims:[
       {name:'Wind', msrp:39700, drivetrain:'FWD', range:253, mpge:113, batteryKwh:64.8, dcfcKw:85, zeroToSixty:7.1, cargo:63.7, comfort:['Heated front seats standard','10-way power driver seat']},
       {name:'Wave', msrp:44700, drivetrain:'FWD', range:253, mpge:113, batteryKwh:64.8, dcfcKw:85, zeroToSixty:7.1, cargo:63.7, comfort:['Adds ventilated front seats','Driver memory seat','Heated outboard rear seats']},
     ]},
   { id:'bz', make:'Toyota', model:'bZ', year:2026,
-    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'},
+    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'}, length:184.6, wheelbase:112.2,
     trims:[
       {name:'XLE', msrp:34900, drivetrain:'FWD', range:236, mpge:130, batteryKwh:57.7, dcfcKw:150, zeroToSixty:8.0, cargo:27.7, comfort:['Heated front seats standard','Heated steering wheel standard']},
       {name:'XLE Plus', msrp:37900, drivetrain:'FWD', range:314, mpge:131, batteryKwh:74.7, dcfcKw:150, zeroToSixty:6.5, cargo:27.7, comfort:['Heated front seats standard','Heated steering wheel standard']},
       {name:'Limited', msrp:43300, drivetrain:'AWD', range:278, mpge:117, batteryKwh:74.7, dcfcKw:150, zeroToSixty:4.6, cargo:27.7, comfort:['Ventilated SofTex front seats','Heated rear seats','Panoramic moonroof']},
     ]},
   { id:'solterra', make:'Subaru', model:'Solterra', year:2026,
-    warranty:{basic:'3/36 (US term not independently confirmed)', battery:'8/100'},
+    warranty:{basic:'3/36 (US term not independently confirmed)', battery:'8/100'}, length:184.6, wheelbase:112.2,
     trims:[
       {name:'Premium', msrp:38495, drivetrain:'AWD', range:288, mpge:120, batteryKwh:74.7, dcfcKw:150, zeroToSixty:null, cargo:23.8, comfort:['Heated front seats standard']},
       {name:'Limited', msrp:41395, drivetrain:'AWD', range:288, mpge:120, batteryKwh:74.7, dcfcKw:150, zeroToSixty:null, cargo:23.8, comfort:['Adds heated rear outboard seats']},
       {name:'Limited XT', msrp:42895, drivetrain:'AWD', range:278, mpge:117, batteryKwh:74.7, dcfcKw:150, zeroToSixty:4.9, cargo:23.8, comfort:['Uprated 338hp motor','Heated front &amp; rear seats']},
     ]},
   { id:'ioniq5', make:'Hyundai', model:'Ioniq 5', year:2026,
-    warranty:{basic:'5/60', battery:'8/100 · 10/100 powertrain'},
+    warranty:{basic:'5/60', battery:'8/100 · 10/100 powertrain'}, length:183.3, wheelbase:118.1,
     trims:[
       {name:'SE Standard Range', msrp:35000, drivetrain:'RWD', range:245, mpge:115, batteryKwh:63, dcfcKw:350, zeroToSixty:8.5, cargo:26.3, comfort:['Heated front seats standard','Cloth seating']},
       {name:'SE', msrp:37500, drivetrain:'RWD', range:318, mpge:114, batteryKwh:84, dcfcKw:350, zeroToSixty:7.4, cargo:26.3, comfort:['Heated front seats standard','Cloth seating']},
     ]},
   { id:'ev6', make:'Kia', model:'EV6', year:2026,
-    warranty:{basic:'5/60', battery:'10/100 (Kia standard EV coverage)'},
+    warranty:{basic:'5/60', battery:'10/100 (Kia standard EV coverage)'}, length:184.8, wheelbase:114.2,
     trims:[
       {name:'Light', msrp:37900, drivetrain:'RWD', range:237, mpge:115, batteryKwh:63, dcfcKw:null, zeroToSixty:8.3, cargo:24.4, comfort:['Heated front seats standard']},
       {name:'Light Long Range', msrp:41200, drivetrain:'RWD', range:319, mpge:115, batteryKwh:84, dcfcKw:null, zeroToSixty:7.3, cargo:24.4, comfort:['Heated front seats standard']},
     ]},
   { id:'ex30', make:'Volvo', model:'EX30', year:2026,
-    warranty:{basic:'4/50 (covers powertrain)', battery:'8/100'},
+    warranty:{basic:'4/50 (covers powertrain)', battery:'8/100'}, length:166.7, wheelbase:104.3,
     trims:[
       {name:'Plus, Single Motor', msrp:38950, drivetrain:'RWD', range:261, mpge:116, batteryKwh:64, dcfcKw:153, zeroToSixty:5.1, cargo:27.8, comfort:['Heated seats/wheel optional ($500 pkg) — not standard']},
     ]},
   { id:'machE', make:'Ford', model:'Mustang Mach-E', year:2026,
-    warranty:{basic:'3/36', battery:'8/100 (70% capacity floor) · 5/60 powertrain'},
+    warranty:{basic:'3/36', battery:'8/100 (70% capacity floor) · 5/60 powertrain'}, length:185.6, wheelbase:117.5,
     trims:[
       {name:'Select RWD', msrp:37795, drivetrain:'RWD', range:240, mpge:null, batteryKwh:73, dcfcKw:150, zeroToSixty:null, cargo:59.1, comfort:['No heated seats standard (optional Comfort Pkg)']},
       {name:'Select AWD', msrp:40795, drivetrain:'AWD', range:null, mpge:null, batteryKwh:73, dcfcKw:150, zeroToSixty:null, cargo:59.1, comfort:['No heated seats standard (optional Comfort Pkg)']},
@@ -662,33 +673,33 @@ const SEED_MODELS = [
       {name:'Premium AWD', msrp:43595, drivetrain:'AWD', range:null, mpge:null, batteryKwh:88, dcfcKw:150, zeroToSixty:null, cargo:59.1, comfort:['Heated &amp; ventilated front seats standard','Heated steering wheel']},
     ]},
   { id:'modely', make:'Tesla', model:'Model Y', year:2026,
-    warranty:{basic:'4/50', battery:'8/100–120 (mileage may vary by pack; not confirmed for Standard)'},
+    warranty:{basic:'4/50', battery:'8/100–120 (mileage may vary by pack; not confirmed for Standard)'}, length:188.9, wheelbase:113.8,
     trims:[
       {name:'Standard RWD', msrp:39990, drivetrain:'RWD', range:321, mpge:138, batteryKwh:null, dcfcKw:250, zeroToSixty:6.8, cargo:76, comfort:['Heated front seats standard','Ventilated/heated rear seats not confirmed for this trim']},
       {name:'Standard AWD', msrp:41990, drivetrain:'AWD', range:294, mpge:null, batteryKwh:null, dcfcKw:250, zeroToSixty:4.6, cargo:76, comfort:['Heated front seats standard','Ventilated/heated rear seats not confirmed for this trim']},
     ]},
   { id:'uncharted', make:'Subaru', model:'Uncharted', year:2026,
-    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'},
+    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'}, length:177.9, wheelbase:108.3,
     trims:[
       {name:'Premium', msrp:34995, drivetrain:'FWD', range:308, mpge:129, batteryKwh:74.7, dcfcKw:150, zeroToSixty:null, cargo:25.4, comfort:['Heated front seats standard (All-Weather Package)']},
       {name:'Sport', msrp:39795, drivetrain:'AWD', range:285, mpge:117, batteryKwh:74.7, dcfcKw:150, zeroToSixty:4.7, cargo:25.4, comfort:['Heated front seats standard (All-Weather Package)']},
       {name:'GT', msrp:43795, drivetrain:'AWD', range:273, mpge:112, batteryKwh:74.7, dcfcKw:150, zeroToSixty:4.7, cargo:25.4, comfort:['Adds ventilated front seats','Heated rear outboard seats']},
     ]},
   { id:'leaf', make:'Nissan', model:'Leaf', year:2026,
-    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'},
+    warranty:{basic:'3/36', battery:'8/100 · 5/60 powertrain'}, length:null, wheelbase:null,
     trims:[
       {name:'S+', msrp:29990, drivetrain:'FWD', range:303, mpge:121, batteryKwh:75, dcfcKw:150, zeroToSixty:7.1, cargo:23.6, comfort:['Cloth seats, 6-way manual — no heating standard']},
       {name:'SV+', msrp:34230, drivetrain:'FWD', range:288, mpge:114, batteryKwh:75, dcfcKw:150, zeroToSixty:7.1, cargo:23.6, comfort:['Heated front seats standard','8-way power driver seat','First trim with rear climate vents']},
       {name:'Platinum+', msrp:38990, drivetrain:'FWD', range:259, mpge:103, batteryKwh:75, dcfcKw:150, zeroToSixty:7.1, cargo:23.6, comfort:['Heated front &amp; rear seats standard','Heated steering wheel']},
     ]},
   { id:'vf8', make:'VinFast', model:'VF8', year:2026,
-    warranty:{basic:'10/125', battery:'10yr / unlimited miles (to ~70% capacity floor)'},
+    warranty:{basic:'10/125', battery:'10yr / unlimited miles (to ~70% capacity floor)'}, length:187.0, wheelbase:116.1,
     trims:[
       {name:'Eco', msrp:39900, drivetrain:'AWD', range:256, mpge:73, batteryKwh:87.7, dcfcKw:110, zeroToSixty:5.9, cargo:13.2, comfort:['Heated front seats standard','Head-up display standard']},
       {name:'Plus', msrp:44900, drivetrain:'AWD', range:235, mpge:80, batteryKwh:87.7, dcfcKw:150, zeroToSixty:5.8, cargo:13.2, comfort:['Heated front seats standard','Head-up display standard']},
     ]},
   { id:'equinox', make:'Chevrolet', model:'Equinox EV', year:2026,
-    warranty:{basic:'3/36', battery:'8/100'},
+    warranty:{basic:'3/36', battery:'8/100'}, length:190.6, wheelbase:116.3,
     trims:[
       {name:'LT1', msrp:34995, drivetrain:'FWD', range:319, mpge:108, batteryKwh:85, dcfcKw:150, zeroToSixty:7.7, cargo:26.4, comfort:['Heated front seats/steering wheel available via Comfort Package — not standard']},
       {name:'LT2', msrp:41795, drivetrain:'FWD', range:319, mpge:108, batteryKwh:85, dcfcKw:150, zeroToSixty:7.7, cargo:26.4, comfort:['Heated front seats standard','Heated steering wheel standard','Power driver’s seat with lumbar']},
