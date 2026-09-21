@@ -4,6 +4,8 @@ niro,Kia,Niro EV,2026,5/60,10/100 (inferred from Kia’s general EV policy — n
 bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,XLE,34900,FWD,236,130,57.7,150,8,27.7,184.6,112.2,Heated front seats standard | Heated steering wheel standard,FALSE
 bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,XLE Plus,37900,FWD,314,131,74.7,150,6.5,27.7,184.6,112.2,Heated front seats standard | Heated steering wheel standard,FALSE
 bz,Toyota,bZ,2026,3/36,8/100 · 5/60 powertrain,Limited,43300,AWD,278,117,74.7,150,4.6,27.7,184.6,112.2,Ventilated SofTex front seats | Heated rear seats | Panoramic moonroof,FALSE
+chr,Toyota,C-HR,2026,3/36 (Toyota's standard basic warranty — not independently confirmed model-specific for C-HR),8/100 (EV components; separate powertrain term not confirmed),SE,37000,AWD,287,,74.7,150,4.9,25.3,177.9,108.3,Heated front seats standard | Heated steering wheel standard | No ventilated seats available on either trim,FALSE
+chr,Toyota,C-HR,2026,3/36 (Toyota's standard basic warranty — not independently confirmed model-specific for C-HR),8/100 (EV components; separate powertrain term not confirmed),XSE,39000,AWD,273,,74.7,150,4.9,25.3,177.9,108.3,Adds SofTex-trim seats | Power passenger seat | Driver memory settings,FALSE
 solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Premium,38495,AWD,288,120,74.7,150,,23.8,184.6,112.2,Heated front seats standard,FALSE
 solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Limited,41395,AWD,288,120,74.7,150,,23.8,184.6,112.2,Adds heated rear outboard seats,FALSE
 solterra,Subaru,Solterra,2026,3/36 (US term not independently confirmed),8/100,Limited XT,42895,AWD,278,117,74.7,150,4.9,23.8,184.6,112.2,Uprated 338hp motor | Heated front &amp; rear seats,FALSE
@@ -29,3 +31,4 @@ vf8,VinFast,VF8,2026,10/125,10yr / unlimited miles (to ~70% capacity floor),Plus
 equinox,Chevrolet,Equinox EV,2026,3/36,8/100,LT1,34995,FWD,319,108,85,150,7.7,26.4,190.6,116.3,Heated front seats/steering wheel available via Comfort Package — not standard,FALSE
 equinox,Chevrolet,Equinox EV,2026,3/36,8/100,LT2,41795,FWD,319,108,85,150,7.7,26.4,190.6,116.3,Heated front seats standard | Heated steering wheel standard | Power driver’s seat with lumbar,FALSE
 equinox,Chevrolet,Equinox EV,2026,3/36,8/100,RS,44095,FWD,319,108,85,150,,26.4,190.6,116.3,Heated front seats &amp; steering wheel standard | Ventilated front seats &amp; dual-zone climate via Convenience Package II,TRUE
+prologue,Honda,Prologue,2026,3/36,8/100,EX,39900,FWD,308,104,85,,,25.2,192,121.8,"Heated front seats standard | Dual-zone climate standard | 8-way power driver seat — cloth upholstery, no ventilated seats (Touring/Elite exclusive)",FALSE
