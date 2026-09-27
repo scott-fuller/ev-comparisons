@@ -193,17 +193,30 @@ table.cmp tbody tr.trim-row[hidden]{display:none}
 .veh-cell{min-width:170px}
 .veh-name{font-family:var(--display);font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:-.008em;display:flex;align-items:center;gap:8px;cursor:pointer;width:fit-content;border-bottom:1px dotted var(--ink-faint)}
 .veh-dot{width:9px;height:9px;border-radius:50%;background:var(--s1);flex-shrink:0}
-.img-preview{
-  position:fixed;z-index:60;background:var(--ink);border-radius:6px;box-shadow:0 10px 30px rgba(0,0,0,.3);
-  padding:12px;display:flex;gap:10px;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s ease;
-}
-.img-preview.show{opacity:1;visibility:visible}
-.img-preview .shot{width:120px}
-.img-preview .img-wrap{width:120px;height:90px;border-radius:4px;overflow:hidden;background:#2F343C}
-.img-preview .img-wrap img{width:120px;height:90px;object-fit:cover;display:block}
-.img-preview .noimg{width:120px;height:90px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-family:var(--mono);font-size:9px;text-align:center;padding:6px;box-sizing:border-box;line-height:1.3}
-.img-preview .cap{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:5px;text-align:center}
 .veh-trim{font-family:var(--mono);font-size:10.5px;color:var(--ink-faint);margin-top:3px;letter-spacing:.02em}
+
+/* ---------- photo gallery (lightbox) ---------- */
+.gallery-overlay{position:fixed;inset:0;z-index:100;background:rgba(18,20,24,.94);display:none;align-items:center;justify-content:center;flex-direction:column;padding:56px 12px 24px;box-sizing:border-box}
+.gallery-overlay.show{display:flex}
+.gallery-close{position:absolute;top:14px;right:18px;background:none;border:0;color:#fff;font-size:30px;line-height:1;cursor:pointer;opacity:.75;padding:4px}
+.gallery-close:hover{opacity:1}
+.gallery-main{position:relative;width:100%;max-width:760px;display:flex;align-items:center;justify-content:center;gap:8px}
+.gallery-img-wrap{width:100%;aspect-ratio:4/3;max-height:60vh;background:#1B1E23;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.gallery-img-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+.gallery-noimg{color:rgba(255,255,255,.42);font-family:var(--mono);font-size:12.5px;text-align:center;padding:20px}
+.gallery-arrow{flex:none;background:rgba(255,255,255,.1);border:0;color:#fff;width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.gallery-arrow:hover{background:rgba(255,255,255,.2)}
+.gallery-caption{color:#fff;font-family:var(--display);font-weight:700;font-size:15px;margin-top:14px;text-align:center}
+.gallery-sub{color:rgba(255,255,255,.55);font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;margin-top:3px;text-align:center}
+.gallery-thumbs{display:flex;gap:8px;margin-top:14px;max-width:760px;overflow-x:auto;padding:2px}
+.gallery-thumb{width:60px;height:45px;border-radius:4px;overflow:hidden;flex:none;cursor:pointer;border:2px solid transparent;background:#2F343C;opacity:.55;transition:opacity .12s ease}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-thumb:hover{opacity:.85}
+.gallery-thumb.on{border-color:var(--s1);opacity:1}
+@media(max-width:600px){
+  .gallery-arrow{width:32px;height:32px;font-size:13px}
+  .gallery-main{max-width:100%}
+}
 .expand-btn{
   margin-top:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--s1);
   background:none;border:1px solid var(--rule);border-radius:20px;padding:3px 10px;cursor:pointer;
@@ -644,7 +657,18 @@ footer{padding:44px 0 70px}
 </footer>
 
 <div class="tooltip" id="tip"></div>
-<div class="img-preview" id="imgPreview"></div>
+
+<div class="gallery-overlay" id="galleryOverlay">
+  <button class="gallery-close" id="galleryClose" aria-label="Close gallery">&times;</button>
+  <div class="gallery-main">
+    <button class="gallery-arrow gallery-prev" id="galleryPrev" aria-label="Previous photo">&#10094;</button>
+    <div class="gallery-img-wrap" id="galleryImgWrap"></div>
+    <button class="gallery-arrow gallery-next" id="galleryNext" aria-label="Next photo">&#10095;</button>
+  </div>
+  <div class="gallery-caption" id="galleryCaption"></div>
+  <div class="gallery-sub" id="gallerySub"></div>
+  <div class="gallery-thumbs" id="galleryThumbs"></div>
+</div>
 
 <script>
 /* ============ DATA ============
@@ -963,7 +987,7 @@ function trimRowHTML(m, t, isBase){
   return `
     <tr class="${isBase?'base-row':'trim-row'}" data-model="${m.id}" ${isBase?'':'hidden'}>
       <td class="veh-cell">
-        ${isBase ? `<div class="veh-name" title="Hover for photos"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>` : ''}
+        ${isBase ? `<div class="veh-name" title="View photo gallery"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>` : ''}
         <div class="veh-trim">${t.name}${t.priceFlag?' <b style="color:var(--warn)">†</b>':''} · ${t.drivetrain} · ${m.year}</div>
         ${isBase && m.trims.length>1 ? `<button class="expand-btn" data-toggle="${m.id}">+${m.trims.length-1} more trim${m.trims.length>2?'s':''}</button>`:''}
       </td>
@@ -1026,7 +1050,7 @@ function usedRowHTML(row){
   return `
     <tr class="base-row${row.lowAvail?' low-avail':''}" data-used-model="${row.modelId}">
       <td class="veh-cell">
-        <div class="veh-name" title="Hover for photos"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>
+        <div class="veh-name" title="View photo gallery"><span class="veh-dot" style="background:${modelAccent(m.id)}"></span>${m.make} ${m.model}</div>
         <div class="veh-trim">${t.name} trim &middot; ${t.drivetrain} &middot; 2025</div>
         ${row.lowAvail?`<span class="avail-badge" title="${row.availNote}">&#9888; Low used availability</span>`:''}
       </td>
@@ -1531,19 +1555,32 @@ document.getElementById('dealerInfo').addEventListener('input', e=>{
 renderDealerPicker();
 renderDealerSection();
 
-/* ============ PHOTO HOVER PREVIEW ============ */
-// Images are local files, not hotlinked: images/<modelId>-exterior.jpg, -frontseat.jpg,
-// -interior.jpg. Drop a file in with the matching name and it appears automatically —
-// no code change needed. Missing files render "Photo unavailable" rather than a broken
-// image icon (see the error handler below).
-const VEHICLE_IMAGES = {};
-Object.keys(MODELS.reduce((a,m)=>(a[m.id]=1,a),{})).forEach(id=>{
-  VEHICLE_IMAGES[id] = {
-    exterior: `images/${id}-exterior.jpg`,
-    frontSeat: `images/${id}-frontseat.jpg`,
-    interior: `images/${id}-interior.jpg`,
-  };
-});
+/* ============ PHOTO GALLERY ============ */
+// Images are local files, not hotlinked: images/<modelId>-ext-1.jpg .. -ext-4.jpg (exterior)
+// and images/<modelId>-int-1.jpg .. -int-4.jpg (interior). Drop files in with matching names —
+// no code change needed. Each model is probed for up to 4 of each kind (8 slots) only once,
+// the first time its gallery is opened, so page load never fetches photos nobody has viewed
+// yet; missing numbers 404 silently and are left out rather than shown broken. ext-1 doubles
+// as the hero-slideshow photo above, so it should be that model's best exterior 3/4 shot.
+const GALLERY_MAX = {ext:4, int:4};
+const galleryCache = {}; // modelId -> [{src,label}], filled in by probeGalleryPhotos()
+function probeGalleryPhotos(modelId){
+  if(galleryCache[modelId]) return Promise.resolve(galleryCache[modelId]);
+  const candidates = [];
+  [['ext','Exterior'],['int','Interior']].forEach(([kind,label])=>{
+    for(let i=1;i<=GALLERY_MAX[kind];i++) candidates.push({src:`images/${modelId}-${kind}-${i}.jpg`, label});
+  });
+  return Promise.all(candidates.map(c=> new Promise(resolve=>{
+    const img = new Image();
+    img.addEventListener('load', ()=> resolve(c), {once:true});
+    img.addEventListener('error', ()=> resolve(null), {once:true});
+    img.src = c.src;
+  }))).then(results=>{
+    const photos = results.filter(Boolean);
+    galleryCache[modelId] = photos;
+    return photos;
+  });
+}
 
 /* ============ HERO SLIDESHOW (below the primary table) ============ */
 // Reuses the same images/<modelId>-exterior.jpg convention as the hover preview above —
@@ -1562,7 +1599,7 @@ Object.keys(MODELS.reduce((a,m)=>(a[m.id]=1,a),{})).forEach(id=>{
       id: m.id,
       name: `${m.make} ${m.model}`,
       price: base ? fmtUSD(vaPrice(base)) : null,
-      img: VEHICLE_IMAGES[m.id].exterior,
+      img: `images/${m.id}-ext-1.jpg`,
     };
   });
 
@@ -1613,42 +1650,70 @@ Object.keys(MODELS.reduce((a,m)=>(a[m.id]=1,a),{})).forEach(id=>{
   resetTimer();
 })();
 
-const imgPreview = document.getElementById('imgPreview');
-const SHOT_TYPES = [['exterior','Exterior'],['frontSeat','Front seats'],['interior','Interior']];
-function showImgPreview(modelId, targetEl){
-  const imgs = VEHICLE_IMAGES[modelId] || {};
-  imgPreview.innerHTML = SHOT_TYPES.map(([key,label])=>
-    `<div class="shot"><div class="img-wrap" data-key="${key}"><div class="noimg">Photo unavailable</div></div><div class="cap">${label}</div></div>`
-  ).join('');
-  imgPreview.querySelectorAll('.img-wrap').forEach(wrap=>{
-    const url = imgs[wrap.dataset.key];
-    if(!url) return;
-    const img = new Image();
-    img.alt = wrap.nextElementSibling.textContent;
-    img.addEventListener('error', ()=>{ wrap.innerHTML = '<div class="noimg">Photo unavailable</div>'; }, {once:true});
-    img.addEventListener('load', ()=>{ wrap.innerHTML=''; wrap.appendChild(img); }, {once:true});
-    img.src = url;
-  });
-  const r = targetEl.getBoundingClientRect();
-  const pw = 3*120 + 2*10 + 24;
-  let left = Math.min(Math.max(r.left, 12), window.innerWidth - pw - 12);
-  let top = r.bottom + 8;
-  if(top + 122 > window.innerHeight - 12) top = Math.max(12, r.top - 118);
-  imgPreview.style.left = left+'px';
-  imgPreview.style.top = top+'px';
-  imgPreview.classList.add('show');
+const galleryOverlay = document.getElementById('galleryOverlay');
+const galleryImgWrap = document.getElementById('galleryImgWrap');
+const galleryThumbsEl = document.getElementById('galleryThumbs');
+const galleryCaptionEl = document.getElementById('galleryCaption');
+const gallerySubEl = document.getElementById('gallerySub');
+let galleryPhotos = [];
+let galleryIndex = 0;
+let galleryModelName = '';
+
+function renderGallerySlide(){
+  const p = galleryPhotos[galleryIndex];
+  galleryImgWrap.innerHTML = p
+    ? `<img src="${p.src}" alt="${galleryModelName} — ${p.label}">`
+    : `<div class="gallery-noimg">No photos yet for this model</div>`;
+  gallerySubEl.textContent = p ? `${p.label} · ${galleryIndex+1} of ${galleryPhotos.length}` : '';
+  galleryThumbsEl.querySelectorAll('.gallery-thumb').forEach((el,i)=> el.classList.toggle('on', i===galleryIndex));
+  const showArrows = galleryPhotos.length > 1;
+  document.getElementById('galleryPrev').style.visibility = showArrows ? 'visible' : 'hidden';
+  document.getElementById('galleryNext').style.visibility = showArrows ? 'visible' : 'hidden';
 }
-function hideImgPreview(){ imgPreview.classList.remove('show'); }
+function galleryGoTo(i){
+  if(!galleryPhotos.length) return;
+  galleryIndex = (i + galleryPhotos.length) % galleryPhotos.length;
+  renderGallerySlide();
+}
+function openGallery(modelId, modelName){
+  galleryModelName = modelName;
+  galleryCaptionEl.textContent = modelName;
+  gallerySubEl.textContent = '';
+  galleryImgWrap.innerHTML = `<div class="gallery-noimg">Loading…</div>`;
+  galleryThumbsEl.innerHTML = '';
+  document.getElementById('galleryPrev').style.visibility = 'hidden';
+  document.getElementById('galleryNext').style.visibility = 'hidden';
+  galleryOverlay.classList.add('show');
+  probeGalleryPhotos(modelId).then(photos=>{
+    galleryPhotos = photos;
+    galleryIndex = 0;
+    galleryThumbsEl.innerHTML = photos.map((p,i)=>`<div class="gallery-thumb" data-i="${i}"><img src="${p.src}" alt="" loading="lazy"></div>`).join('');
+    renderGallerySlide();
+  });
+}
+function closeGallery(){ galleryOverlay.classList.remove('show'); }
+document.getElementById('galleryClose').addEventListener('click', closeGallery);
+document.getElementById('galleryPrev').addEventListener('click', ()=> galleryGoTo(galleryIndex-1));
+document.getElementById('galleryNext').addEventListener('click', ()=> galleryGoTo(galleryIndex+1));
+galleryOverlay.addEventListener('click', e=>{ if(e.target === galleryOverlay) closeGallery(); });
+galleryThumbsEl.addEventListener('click', e=>{
+  const thumb = e.target.closest('.gallery-thumb');
+  if(thumb) galleryGoTo(+thumb.dataset.i);
+});
+document.addEventListener('keydown', e=>{
+  if(!galleryOverlay.classList.contains('show')) return;
+  if(e.key==='Escape') closeGallery();
+  if(e.key==='ArrowLeft') galleryGoTo(galleryIndex-1);
+  if(e.key==='ArrowRight') galleryGoTo(galleryIndex+1);
+});
 document.querySelectorAll('.table-scroll').forEach(scroller=>{
-  scroller.addEventListener('mouseover', e=>{
+  scroller.addEventListener('click', e=>{
     const nameEl = e.target.closest('.veh-name');
     if(!nameEl) return;
     const row = nameEl.closest('tr');
     const modelId = row.dataset.model || row.dataset.usedModel;
-    if(modelId) showImgPreview(modelId, nameEl);
-  });
-  scroller.addEventListener('mouseout', e=>{
-    if(e.target.closest('.veh-name')) hideImgPreview();
+    const m = MODELS.find(x=>x.id===modelId);
+    if(m) openGallery(modelId, `${m.make} ${m.model}`);
   });
 });
 
